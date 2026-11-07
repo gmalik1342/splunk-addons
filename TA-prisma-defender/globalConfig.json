@@ -1,0 +1,494 @@
+{
+    "pages": {
+        "configuration": {
+            "title": "Configuration",
+            "description": "Configure VeeOne API accounts, proxy and logging for the add-on.",
+            "tabs": [
+                {
+                    "name": "account",
+                    "title": "Accounts",
+                    "restHandlerModule": "prisma_account_handler",
+                    "restHandlerClass": "PrismaAccountHandler",
+                    "table": {
+                        "actions": [
+                            "edit",
+                            "delete",
+                            "clone"
+                        ],
+                        "header": [
+                            {
+                                "label": "Name",
+                                "field": "name"
+                            },
+                            {
+                                "label": "Console URL",
+                                "field": "console_url"
+                            },
+                            {
+                                "label": "Access Key ID",
+                                "field": "access_key_id"
+                            },
+                            {
+                                "label": "API Version",
+                                "field": "api_version"
+                            }
+                        ]
+                    },
+                    "entity": [
+                        {
+                            "type": "text",
+                            "label": "Account Name",
+                            "field": "name",
+                            "help": "A unique name for this Prisma Cloud Compute Console connection.",
+                            "required": true,
+                            "validators": [
+                                {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 50,
+                                    "errorMsg": "Length of Account Name should be between 1 and 50."
+                                },
+                                {
+                                    "type": "regex",
+                                    "pattern": "^[a-zA-Z]\\w*$",
+                                    "errorMsg": "Name must begin with a letter and contain only letters, numbers and underscores."
+                                }
+                            ]
+                        },
+                        {
+                            "type": "text",
+                            "label": "Console URL",
+                            "field": "console_url",
+                            "required": true,
+                            "help": "Path to Console, from Runtime Security (Compute) > Manage > System > Utilities. SaaS example: https://us-east1.cloud.twistlock.com/us-1-123456789. Self-hosted example: https://console.example.com:8083",
+                            "validators": [
+                                {
+                                    "type": "regex",
+                                    "pattern": "^(https://)?[A-Za-z0-9]([A-Za-z0-9-]*[A-Za-z0-9])?(\\.[A-Za-z0-9]([A-Za-z0-9-]*[A-Za-z0-9])?)*(:\\d{1,5})?(/[A-Za-z0-9._~-]+)*/?$",
+                                    "errorMsg": "Enter the HTTPS Console address, e.g. https://us-east1.cloud.twistlock.com/us-1-123456789"
+                                },
+                                {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 512,
+                                    "errorMsg": "Length of Console URL should be between 1 and 512."
+                                }
+                            ]
+                        },
+                        {
+                            "type": "text",
+                            "label": "Access Key ID",
+                            "field": "access_key_id",
+                            "required": true,
+                            "help": "Prisma Cloud access key ID (or a Compute Console username for self-hosted). The role needs read access to Defenders and registry scan results.",
+                            "validators": [
+                                {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 256,
+                                    "errorMsg": "Length of Access Key ID should be between 1 and 256."
+                                }
+                            ]
+                        },
+                        {
+                            "type": "text",
+                            "label": "Secret Key",
+                            "field": "secret_key",
+                            "required": true,
+                            "encrypted": true,
+                            "help": "Secret key (or password). Sent with HTTP basic auth over TLS; stored encrypted in Splunk's credential store.",
+                            "validators": [
+                                {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 8192,
+                                    "errorMsg": "Length of Secret Key should be between 1 and 8192."
+                                }
+                            ]
+                        },
+                        {
+                            "type": "text",
+                            "label": "API Version",
+                            "field": "api_version",
+                            "required": true,
+                            "defaultValue": "v34.02",
+                            "help": "Compute API version in the path, e.g. v34.02 (see the API docs for your Console version), or v1.",
+                            "validators": [
+                                {
+                                    "type": "regex",
+                                    "pattern": "^v\\d+(\\.\\d+)?$",
+                                    "errorMsg": "API Version must look like v34.02 or v1."
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "proxy",
+                    "title": "Proxy",
+                    "entity": [
+                        {
+                            "type": "checkbox",
+                            "label": "Enable",
+                            "field": "proxy_enabled"
+                        },
+                        {
+                            "type": "singleSelect",
+                            "label": "Proxy Type",
+                            "field": "proxy_type",
+                            "defaultValue": "http",
+                            "options": {
+                                "disableSearch": true,
+                                "autoCompleteFields": [
+                                    {
+                                        "value": "http",
+                                        "label": "http"
+                                    },
+                                    {
+                                        "value": "socks5",
+                                        "label": "socks5"
+                                    }
+                                ]
+                            },
+                            "validators": [
+                                {
+                                    "type": "regex",
+                                    "pattern": "^(http|socks5)$",
+                                    "errorMsg": "Proxy Type must be http or socks5."
+                                }
+                            ]
+                        },
+                        {
+                            "type": "text",
+                            "label": "Host",
+                            "field": "proxy_url",
+                            "validators": [
+                                {
+                                    "type": "string",
+                                    "minLength": 0,
+                                    "maxLength": 4096,
+                                    "errorMsg": "Max host length is 4096"
+                                },
+                                {
+                                    "type": "regex",
+                                    "pattern": "^[A-Za-z0-9.:\\-\\[\\]]*$",
+                                    "errorMsg": "Enter a host name or IP address only, without scheme."
+                                }
+                            ]
+                        },
+                        {
+                            "type": "text",
+                            "label": "Port",
+                            "field": "proxy_port",
+                            "validators": [
+                                {
+                                    "type": "number",
+                                    "range": [
+                                        1,
+                                        65535
+                                    ],
+                                    "isInteger": true
+                                }
+                            ]
+                        },
+                        {
+                            "type": "text",
+                            "label": "Username",
+                            "field": "proxy_username",
+                            "validators": [
+                                {
+                                    "type": "string",
+                                    "minLength": 0,
+                                    "maxLength": 50,
+                                    "errorMsg": "Max length of username is 50"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "text",
+                            "label": "Password",
+                            "field": "proxy_password",
+                            "encrypted": true,
+                            "validators": [
+                                {
+                                    "type": "string",
+                                    "minLength": 0,
+                                    "maxLength": 8192,
+                                    "errorMsg": "Max length of password is 8192"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "checkbox",
+                            "label": "Reverse DNS resolution (socks5)",
+                            "field": "proxy_rdns"
+                        }
+                    ],
+                    "options": {
+                        "saveValidator": "function(formData) { if(!formData.proxy_enabled || formData.proxy_enabled === '0') {return true; } if(!formData.proxy_url) { return 'Proxy Host can not be empty'; } if(!formData.proxy_port) { return 'Proxy Port can not be empty'; } return true; }"
+                    }
+                },
+                {
+                    "name": "logging",
+                    "title": "Logging",
+                    "entity": [
+                        {
+                            "type": "singleSelect",
+                            "label": "Log level",
+                            "field": "loglevel",
+                            "defaultValue": "INFO",
+                            "options": {
+                                "disableSearch": true,
+                                "autoCompleteFields": [
+                                    {
+                                        "value": "DEBUG",
+                                        "label": "DEBUG"
+                                    },
+                                    {
+                                        "value": "INFO",
+                                        "label": "INFO"
+                                    },
+                                    {
+                                        "value": "WARNING",
+                                        "label": "WARNING"
+                                    },
+                                    {
+                                        "value": "ERROR",
+                                        "label": "ERROR"
+                                    },
+                                    {
+                                        "value": "CRITICAL",
+                                        "label": "CRITICAL"
+                                    }
+                                ]
+                            },
+                            "validators": [
+                                {
+                                    "type": "regex",
+                                    "pattern": "^(DEBUG|INFO|WARNING|ERROR|CRITICAL)$",
+                                    "errorMsg": "Select a valid log level."
+                                }
+                            ],
+                            "required": true
+                        }
+                    ]
+                }
+            ]
+        },
+        "inputs": {
+            "title": "Inputs",
+            "description": "Collect Prisma Cloud Compute Defender inventory, Defender summary and registry scan progress.",
+            "table": {
+                "actions": [
+                    "edit",
+                    "delete",
+                    "clone"
+                ],
+                "header": [
+                    {
+                        "label": "Name",
+                        "field": "name"
+                    },
+                    {
+                        "label": "Account",
+                        "field": "account"
+                    },
+                    {
+                        "label": "Interval (s)",
+                        "field": "interval"
+                    },
+                    {
+                        "label": "Index",
+                        "field": "index"
+                    },
+                    {
+                        "label": "Status",
+                        "field": "disabled"
+                    }
+                ],
+                "moreInfo": [
+                    {
+                        "label": "Name",
+                        "field": "name"
+                    },
+                    {
+                        "label": "Account",
+                        "field": "account"
+                    },
+                    {
+                        "label": "Interval (s)",
+                        "field": "interval"
+                    },
+                    {
+                        "label": "Index",
+                        "field": "index"
+                    },
+                    {
+                        "label": "Defender inventory",
+                        "field": "collect_defenders",
+                        "mapping": {
+                            "1": "Yes",
+                            "0": "No",
+                            "true": "Yes",
+                            "false": "No"
+                        }
+                    },
+                    {
+                        "label": "Defender summary",
+                        "field": "collect_summary",
+                        "mapping": {
+                            "1": "Yes",
+                            "0": "No",
+                            "true": "Yes",
+                            "false": "No"
+                        }
+                    },
+                    {
+                        "label": "Registry scan progress",
+                        "field": "collect_registry",
+                        "mapping": {
+                            "1": "Yes",
+                            "0": "No",
+                            "true": "Yes",
+                            "false": "No"
+                        }
+                    },
+                    {
+                        "label": "Status",
+                        "field": "disabled",
+                        "mapping": {
+                            "true": "Disabled",
+                            "false": "Enabled"
+                        }
+                    }
+                ]
+            },
+            "services": [
+                {
+                    "name": "prisma_defender",
+                    "title": "Prisma Defender",
+                    "entity": [
+                        {
+                            "type": "text",
+                            "label": "Name",
+                            "field": "name",
+                            "help": "A unique name for this input.",
+                            "required": true,
+                            "validators": [
+                                {
+                                    "type": "regex",
+                                    "pattern": "^[a-zA-Z]\\w*$",
+                                    "errorMsg": "Name must begin with a letter and contain only letters, numbers and underscores."
+                                },
+                                {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 100,
+                                    "errorMsg": "Length of input name should be between 1 and 100"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "singleSelect",
+                            "label": "Account",
+                            "field": "account",
+                            "help": "Prisma Cloud Compute account configured on the Configuration page.",
+                            "required": true,
+                            "options": {
+                                "referenceName": "account"
+                            },
+                            "validators": [
+                                {
+                                    "type": "regex",
+                                    "pattern": "^[a-zA-Z]\\w*$",
+                                    "errorMsg": "Select a valid account."
+                                },
+                                {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 50,
+                                    "errorMsg": "Length of Account should be between 1 and 50."
+                                }
+                            ]
+                        },
+                        {
+                            "type": "text",
+                            "label": "Interval",
+                            "field": "interval",
+                            "required": true,
+                            "defaultValue": "3600",
+                            "help": "How often to take a snapshot, in seconds (60 to 86400). Each run collects the full Defender list; the default is hourly.",
+                            "validators": [
+                                {
+                                    "type": "number",
+                                    "range": [
+                                        60,
+                                        86400
+                                    ],
+                                    "isInteger": true,
+                                    "errorMsg": "Interval must be an integer between 60 and 86400 seconds."
+                                }
+                            ]
+                        },
+                        {
+                            "type": "singleSelect",
+                            "label": "Index",
+                            "field": "index",
+                            "required": true,
+                            "defaultValue": "default",
+                            "options": {
+                                "endpointUrl": "data/indexes",
+                                "denyList": "^_.*$",
+                                "createSearchChoice": true
+                            },
+                            "validators": [
+                                {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 80,
+                                    "errorMsg": "Length of index name should be between 1 and 80."
+                                }
+                            ]
+                        },
+                        {
+                            "type": "checkbox",
+                            "label": "Defender inventory",
+                            "field": "collect_defenders",
+                            "defaultValue": true,
+                            "help": "One event per Defender, connected and disconnected (record_type=defender)."
+                        },
+                        {
+                            "type": "checkbox",
+                            "label": "Defender summary",
+                            "field": "collect_summary",
+                            "defaultValue": true,
+                            "help": "Defender counts per category (record_type=defenders_summary)."
+                        },
+                        {
+                            "type": "checkbox",
+                            "label": "Registry scan progress",
+                            "field": "collect_registry",
+                            "defaultValue": true,
+                            "help": "Progress of every registry scan, plus totals (record_type=registry_scan_progress / registry_scan_statistics)."
+                        }
+                    ]
+                }
+            ]
+        }
+    },
+    "meta": {
+        "name": "TA-prisma-defender",
+        "restRoot": "TA_prisma_defender",
+        "version": "1.1.0",
+        "displayName": "Prisma Defender",
+        "schemaVersion": "0.0.10",
+        "supportedPythonVersion": [
+            "3.9",
+            "3.13"
+        ],
+        "supportedThemes": [
+            "light",
+            "dark"
+        ]
+    }
+}

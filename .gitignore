@@ -1,0 +1,11 @@
+output/
+dist/
+build/
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+.ruff_cache/
+.DS_Store
+*/package/lib/*
+!*/package/lib/requirements.txt

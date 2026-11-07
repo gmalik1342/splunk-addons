@@ -1,0 +1,5 @@
+splunk-add-on-ucc-framework>=5.58
+splunk-appinspect
+pytest>=8
+requests>=2.32.4
+ruff
