@@ -1,0 +1,658 @@
+{
+    "pages": {
+        "configuration": {
+            "title": "Configuration",
+            "description": "Configure Cortex API accounts, proxy and logging for the add-on.",
+            "tabs": [
+                {
+                    "name": "account",
+                    "title": "Accounts",
+                    "restHandlerModule": "cortex_audit_account_handler",
+                    "restHandlerClass": "CortexAccountHandler",
+                    "table": {
+                        "actions": [
+                            "edit",
+                            "delete",
+                            "clone"
+                        ],
+                        "header": [
+                            {
+                                "label": "Name",
+                                "field": "name"
+                            },
+                            {
+                                "label": "API URL",
+                                "field": "api_url"
+                            },
+                            {
+                                "label": "API Key ID",
+                                "field": "api_key_id"
+                            },
+                            {
+                                "label": "Key Type",
+                                "field": "auth_type"
+                            }
+                        ]
+                    },
+                    "entity": [
+                        {
+                            "type": "text",
+                            "label": "Account Name",
+                            "field": "name",
+                            "help": "A unique name for this Cortex tenant connection.",
+                            "required": true,
+                            "validators": [
+                                {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 50,
+                                    "errorMsg": "Length of Account Name should be between 1 and 50."
+                                },
+                                {
+                                    "type": "regex",
+                                    "pattern": "^[a-zA-Z]\\w*$",
+                                    "errorMsg": "Account Name must begin with a letter and contain only letters, numbers and underscores."
+                                }
+                            ]
+                        },
+                        {
+                            "type": "text",
+                            "label": "API URL",
+                            "field": "api_url",
+                            "help": "Your tenant API host, as shown under Settings > Configurations > API Keys > Copy API URL. Example: https://api-mytenant.xdr.us.paloaltonetworks.com",
+                            "required": true,
+                            "validators": [
+                                {
+                                    "type": "regex",
+                                    "pattern": "^(https://)?api-[A-Za-z0-9][A-Za-z0-9.-]*[A-Za-z0-9](:\\d{1,5})?/?$",
+                                    "errorMsg": "Enter the HTTPS API host beginning with 'api-', for example https://api-mytenant.xdr.us.paloaltonetworks.com"
+                                },
+                                {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 255,
+                                    "errorMsg": "Length of API URL should be between 1 and 255."
+                                }
+                            ]
+                        },
+                        {
+                            "type": "text",
+                            "label": "API Key ID",
+                            "field": "api_key_id",
+                            "help": "The numeric ID of the API key (sent as x-xdr-auth-id).",
+                            "required": true,
+                            "validators": [
+                                {
+                                    "type": "regex",
+                                    "pattern": "^\\d{1,10}$",
+                                    "errorMsg": "API Key ID must be numeric."
+                                }
+                            ]
+                        },
+                        {
+                            "type": "singleSelect",
+                            "label": "API Key Type",
+                            "field": "auth_type",
+                            "help": "Advanced keys sign every request with a nonce and timestamp; Standard keys send the key directly.",
+                            "required": true,
+                            "defaultValue": "advanced",
+                            "options": {
+                                "disableSearch": true,
+                                "autoCompleteFields": [
+                                    {
+                                        "value": "advanced",
+                                        "label": "Advanced"
+                                    },
+                                    {
+                                        "value": "standard",
+                                        "label": "Standard"
+                                    }
+                                ]
+                            },
+                            "validators": [
+                                {
+                                    "type": "regex",
+                                    "pattern": "^(advanced|standard)$",
+                                    "errorMsg": "API Key Type must be Advanced or Standard."
+                                }
+                            ]
+                        },
+                        {
+                            "type": "text",
+                            "label": "API Key",
+                            "field": "api_key",
+                            "help": "Stored encrypted in Splunk's credential store.",
+                            "required": true,
+                            "encrypted": true,
+                            "validators": [
+                                {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 8192,
+                                    "errorMsg": "Length of API Key should be between 1 and 8192."
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "proxy",
+                    "title": "Proxy",
+                    "entity": [
+                        {
+                            "type": "checkbox",
+                            "label": "Enable",
+                            "field": "proxy_enabled"
+                        },
+                        {
+                            "type": "singleSelect",
+                            "label": "Proxy Type",
+                            "field": "proxy_type",
+                            "defaultValue": "http",
+                            "options": {
+                                "disableSearch": true,
+                                "autoCompleteFields": [
+                                    {
+                                        "value": "http",
+                                        "label": "http"
+                                    },
+                                    {
+                                        "value": "socks5",
+                                        "label": "socks5"
+                                    }
+                                ]
+                            },
+                            "validators": [
+                                {
+                                    "type": "regex",
+                                    "pattern": "^(http|socks5)$",
+                                    "errorMsg": "Proxy Type must be http or socks5."
+                                }
+                            ]
+                        },
+                        {
+                            "type": "text",
+                            "label": "Host",
+                            "field": "proxy_url",
+                            "validators": [
+                                {
+                                    "type": "string",
+                                    "minLength": 0,
+                                    "maxLength": 4096,
+                                    "errorMsg": "Max host length is 4096"
+                                },
+                                {
+                                    "type": "regex",
+                                    "pattern": "^[A-Za-z0-9.:\\-\\[\\]]*$",
+                                    "errorMsg": "Enter a host name or IP address only, without scheme."
+                                }
+                            ]
+                        },
+                        {
+                            "type": "text",
+                            "label": "Port",
+                            "field": "proxy_port",
+                            "validators": [
+                                {
+                                    "type": "number",
+                                    "range": [
+                                        1,
+                                        65535
+                                    ],
+                                    "isInteger": true
+                                }
+                            ]
+                        },
+                        {
+                            "type": "text",
+                            "label": "Username",
+                            "field": "proxy_username",
+                            "validators": [
+                                {
+                                    "type": "string",
+                                    "minLength": 0,
+                                    "maxLength": 50,
+                                    "errorMsg": "Max length of username is 50"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "text",
+                            "label": "Password",
+                            "field": "proxy_password",
+                            "encrypted": true,
+                            "validators": [
+                                {
+                                    "type": "string",
+                                    "minLength": 0,
+                                    "maxLength": 8192,
+                                    "errorMsg": "Max length of password is 8192"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "checkbox",
+                            "label": "Reverse DNS resolution (socks5)",
+                            "field": "proxy_rdns"
+                        }
+                    ],
+                    "options": {
+                        "saveValidator": "function(formData) { if(!formData.proxy_enabled || formData.proxy_enabled === '0') {return true; } if(!formData.proxy_url) { return 'Proxy Host can not be empty'; } if(!formData.proxy_port) { return 'Proxy Port can not be empty'; } return true; }"
+                    }
+                },
+                {
+                    "name": "logging",
+                    "title": "Logging",
+                    "entity": [
+                        {
+                            "type": "singleSelect",
+                            "label": "Log level",
+                            "field": "loglevel",
+                            "defaultValue": "INFO",
+                            "options": {
+                                "disableSearch": true,
+                                "autoCompleteFields": [
+                                    {
+                                        "value": "DEBUG",
+                                        "label": "DEBUG"
+                                    },
+                                    {
+                                        "value": "INFO",
+                                        "label": "INFO"
+                                    },
+                                    {
+                                        "value": "WARNING",
+                                        "label": "WARNING"
+                                    },
+                                    {
+                                        "value": "ERROR",
+                                        "label": "ERROR"
+                                    },
+                                    {
+                                        "value": "CRITICAL",
+                                        "label": "CRITICAL"
+                                    }
+                                ]
+                            },
+                            "required": true,
+                            "validators": [
+                                {
+                                    "type": "regex",
+                                    "pattern": "^(DEBUG|INFO|WARNING|ERROR|CRITICAL)$",
+                                    "errorMsg": "Select a valid log level."
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        "inputs": {
+            "title": "Inputs",
+            "description": "Collect Cortex audit management logs and agent audit reports.",
+            "table": {
+                "actions": [
+                    "edit",
+                    "delete",
+                    "clone"
+                ],
+                "header": [
+                    {
+                        "label": "Name",
+                        "field": "name"
+                    },
+                    {
+                        "label": "Account",
+                        "field": "account"
+                    },
+                    {
+                        "label": "Interval (s)",
+                        "field": "interval"
+                    },
+                    {
+                        "label": "Index",
+                        "field": "index"
+                    },
+                    {
+                        "label": "Status",
+                        "field": "disabled"
+                    }
+                ],
+                "moreInfo": [
+                    {
+                        "label": "Name",
+                        "field": "name"
+                    },
+                    {
+                        "label": "Account",
+                        "field": "account"
+                    },
+                    {
+                        "label": "Interval (s)",
+                        "field": "interval"
+                    },
+                    {
+                        "label": "Index",
+                        "field": "index"
+                    },
+                    {
+                        "label": "Start Time (UTC)",
+                        "field": "start_time"
+                    },
+                    {
+                        "label": "Ingestion Delay (s)",
+                        "field": "delay"
+                    },
+                    {
+                        "label": "Categories",
+                        "field": "categories"
+                    },
+                    {
+                        "label": "Status",
+                        "field": "disabled",
+                        "mapping": {
+                            "true": "Disabled",
+                            "false": "Enabled"
+                        }
+                    }
+                ]
+            },
+            "services": [
+                {
+                    "name": "cortex_audit_management_logs",
+                    "title": "Cortex Audit Management Logs",
+                    "entity": [
+                        {
+                            "type": "text",
+                            "label": "Name",
+                            "field": "name",
+                            "help": "A unique name for this input.",
+                            "required": true,
+                            "validators": [
+                                {
+                                    "type": "regex",
+                                    "pattern": "^[a-zA-Z]\\w*$",
+                                    "errorMsg": "Input Name must begin with a letter and contain only letters, numbers and underscores."
+                                },
+                                {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 100,
+                                    "errorMsg": "Length of input name should be between 1 and 100"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "singleSelect",
+                            "label": "Account",
+                            "field": "account",
+                            "help": "Cortex tenant account configured on the Configuration page.",
+                            "required": true,
+                            "options": {
+                                "referenceName": "account"
+                            },
+                            "validators": [
+                                {
+                                    "type": "regex",
+                                    "pattern": "^[a-zA-Z]\\w*$",
+                                    "errorMsg": "Select a valid account."
+                                },
+                                {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 50,
+                                    "errorMsg": "Length of Account should be between 1 and 50."
+                                }
+                            ]
+                        },
+                        {
+                            "type": "text",
+                            "label": "Interval",
+                            "field": "interval",
+                            "help": "How often to poll, in seconds (60 to 86400).",
+                            "required": true,
+                            "defaultValue": "300",
+                            "validators": [
+                                {
+                                    "type": "number",
+                                    "range": [
+                                        60,
+                                        86400
+                                    ],
+                                    "isInteger": true,
+                                    "errorMsg": "Interval must be an integer between 60 and 86400 seconds."
+                                }
+                            ]
+                        },
+                        {
+                            "type": "singleSelect",
+                            "label": "Index",
+                            "field": "index",
+                            "required": true,
+                            "defaultValue": "default",
+                            "options": {
+                                "endpointUrl": "data/indexes",
+                                "denyList": "^_.*$",
+                                "createSearchChoice": true
+                            },
+                            "validators": [
+                                {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 80,
+                                    "errorMsg": "Length of index name should be between 1 and 80."
+                                }
+                            ]
+                        },
+                        {
+                            "type": "text",
+                            "label": "Start Time (UTC)",
+                            "field": "start_time",
+                            "help": "Only used on the first run. Format YYYY-MM-DDThh:mm:ssZ. Leave empty to start 24 hours back.",
+                            "required": false,
+                            "validators": [
+                                {
+                                    "type": "regex",
+                                    "pattern": "^$|^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z$",
+                                    "errorMsg": "Use the format YYYY-MM-DDThh:mm:ssZ, for example 2026-11-01T00:00:00Z."
+                                }
+                            ]
+                        },
+                        {
+                            "type": "text",
+                            "label": "Ingestion Delay",
+                            "field": "delay",
+                            "help": "Seconds to stay behind real time so late-arriving records are not missed (0 to 3600).",
+                            "required": false,
+                            "defaultValue": "60",
+                            "validators": [
+                                {
+                                    "type": "number",
+                                    "range": [
+                                        0,
+                                        3600
+                                    ],
+                                    "isInteger": true,
+                                    "errorMsg": "Ingestion Delay must be an integer between 0 and 3600."
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "cortex_audit_agent_reports",
+                    "title": "Cortex Audit Agent Reports",
+                    "entity": [
+                        {
+                            "type": "text",
+                            "label": "Name",
+                            "field": "name",
+                            "help": "A unique name for this input.",
+                            "required": true,
+                            "validators": [
+                                {
+                                    "type": "regex",
+                                    "pattern": "^[a-zA-Z]\\w*$",
+                                    "errorMsg": "Input Name must begin with a letter and contain only letters, numbers and underscores."
+                                },
+                                {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 100,
+                                    "errorMsg": "Length of input name should be between 1 and 100"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "singleSelect",
+                            "label": "Account",
+                            "field": "account",
+                            "help": "Cortex tenant account configured on the Configuration page.",
+                            "required": true,
+                            "options": {
+                                "referenceName": "account"
+                            },
+                            "validators": [
+                                {
+                                    "type": "regex",
+                                    "pattern": "^[a-zA-Z]\\w*$",
+                                    "errorMsg": "Select a valid account."
+                                },
+                                {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 50,
+                                    "errorMsg": "Length of Account should be between 1 and 50."
+                                }
+                            ]
+                        },
+                        {
+                            "type": "text",
+                            "label": "Interval",
+                            "field": "interval",
+                            "help": "How often to poll, in seconds (60 to 86400).",
+                            "required": true,
+                            "defaultValue": "300",
+                            "validators": [
+                                {
+                                    "type": "number",
+                                    "range": [
+                                        60,
+                                        86400
+                                    ],
+                                    "isInteger": true,
+                                    "errorMsg": "Interval must be an integer between 60 and 86400 seconds."
+                                }
+                            ]
+                        },
+                        {
+                            "type": "singleSelect",
+                            "label": "Index",
+                            "field": "index",
+                            "required": true,
+                            "defaultValue": "default",
+                            "options": {
+                                "endpointUrl": "data/indexes",
+                                "denyList": "^_.*$",
+                                "createSearchChoice": true
+                            },
+                            "validators": [
+                                {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 80,
+                                    "errorMsg": "Length of index name should be between 1 and 80."
+                                }
+                            ]
+                        },
+                        {
+                            "type": "multipleSelect",
+                            "label": "Categories",
+                            "field": "categories",
+                            "help": "Limit collection to these report categories. Leave empty to collect all.",
+                            "required": false,
+                            "options": {
+                                "delimiter": ",",
+                                "items": [
+                                    {
+                                        "value": "audit",
+                                        "label": "Audit"
+                                    },
+                                    {
+                                        "value": "monitoring",
+                                        "label": "Monitoring"
+                                    },
+                                    {
+                                        "value": "status",
+                                        "label": "Status"
+                                    }
+                                ]
+                            },
+                            "validators": [
+                                {
+                                    "type": "regex",
+                                    "pattern": "^((audit|monitoring|status)(,(audit|monitoring|status))*)?$",
+                                    "errorMsg": "Categories may only contain audit, monitoring and status."
+                                }
+                            ]
+                        },
+                        {
+                            "type": "text",
+                            "label": "Start Time (UTC)",
+                            "field": "start_time",
+                            "help": "Only used on the first run. Format YYYY-MM-DDThh:mm:ssZ. Leave empty to start 24 hours back.",
+                            "required": false,
+                            "validators": [
+                                {
+                                    "type": "regex",
+                                    "pattern": "^$|^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z$",
+                                    "errorMsg": "Use the format YYYY-MM-DDThh:mm:ssZ, for example 2026-11-01T00:00:00Z."
+                                }
+                            ]
+                        },
+                        {
+                            "type": "text",
+                            "label": "Ingestion Delay",
+                            "field": "delay",
+                            "help": "Seconds to stay behind real time so late-arriving agent reports are not missed (0 to 3600).",
+                            "required": false,
+                            "defaultValue": "300",
+                            "validators": [
+                                {
+                                    "type": "number",
+                                    "range": [
+                                        0,
+                                        3600
+                                    ],
+                                    "isInteger": true,
+                                    "errorMsg": "Ingestion Delay must be an integer between 0 and 3600."
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        "dashboard": {
+            "panels": [
+                {
+                    "name": "default"
+                }
+            ]
+        }
+    },
+    "meta": {
+        "name": "TA-palo-alto-cortex-audit-logs",
+        "restRoot": "TA_palo_alto_cortex_audit_logs",
+        "version": "1.0.0",
+        "displayName": "Palo Alto Cortex Audit Logs Add-on",
+        "schemaVersion": "0.0.10",
+        "supportedPythonVersion": [
+            "3.13"
+        ],
+        "supportedThemes": [
+            "light",
+            "dark"
+        ]
+    }
+}

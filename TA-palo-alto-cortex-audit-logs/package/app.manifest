@@ -1,0 +1,63 @@
+{
+    "schemaVersion": "2.0.0",
+    "info": {
+        "title": "Palo Alto Cortex Audit Logs Add-on",
+        "id": {
+            "group": null,
+            "name": "TA-palo-alto-cortex-audit-logs",
+            "version": "1.0.0"
+        },
+        "author": [
+            {
+                "name": "Gaurav Malik",
+                "email": null,
+                "company": null
+            }
+        ],
+        "releaseDate": null,
+        "description": "Collects audit management logs and agent audit reports from the Palo Alto Networks Cortex public API.",
+        "classification": {
+            "intendedAudience": "IT Professionals",
+            "categories": [
+                "Security, Fraud & Compliance"
+            ],
+            "developmentStatus": "Production/Stable"
+        },
+        "commonInformationModels": {
+            "Authentication": ">=4.0.0"
+        },
+        "license": {
+            "name": "Apache License 2.0",
+            "text": "LICENSES/LICENSE.txt",
+            "uri": "https://www.apache.org/licenses/LICENSE-2.0"
+        },
+        "privacyPolicy": {
+            "name": null,
+            "text": null,
+            "uri": null
+        },
+        "releaseNotes": {
+            "name": "Release Notes",
+            "text": "README.txt",
+            "uri": null
+        }
+    },
+    "dependencies": {},
+    "tasks": [],
+    "inputGroups": {},
+    "incompatibleApps": {},
+    "platformRequirements": {
+        "splunk": {
+            "Enterprise": "*"
+        }
+    },
+    "supportedDeployments": [
+        "_standalone",
+        "_distributed",
+        "_search_head_clustering"
+    ],
+    "targetWorkloads": [
+        "_search_heads",
+        "_forwarders"
+    ]
+}

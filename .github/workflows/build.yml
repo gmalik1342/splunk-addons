@@ -1,0 +1,49 @@
+name: Build and AppInspect
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        addon:
+          - TA-palo-alto-cortex-audit-logs
+          - TA-veeone
+          - TA-netapp_cloud_insights_secure
+          - TA-prisma-defender
+          - TA-prisma-cloud-discovery
+          - TA-claude-activity-feed
+    defaults:
+      run:
+        working-directory: ${{ matrix.addon }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Install build tools
+        run: |
+          sudo apt-get update && sudo apt-get install -y libmagic1
+          pip install -r requirements-dev.txt
+      - name: Test, build, package, AppInspect (Splunk Cloud precert)
+        run: ./build.sh
+      - name: Fail on AppInspect failures or errors
+        run: |
+          python3 - <<'PY'
+          import json, sys
+          s = json.load(open("dist/appinspect_report.json"))["summary"]
+          print(s)
+          sys.exit(1 if s.get("failure", 0) or s.get("error", 0) else 0)
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.addon }}
+          path: |
+            ${{ matrix.addon }}/dist/*.tar.gz
+            ${{ matrix.addon }}/dist/appinspect_report.json

@@ -1,0 +1,29 @@
+# Runtime dependencies vendored into lib/ by `ucc-gen build`.
+#
+# build.sh installs these with `--no-deps` and pure-Python wheels only
+# (`--only-binary=:all: --platform any --implementation py --python-version 3.9`),
+# so lib/ never contains compiled .so/.pyd files and works on every Python
+# listed in globalConfig.json meta.supportedPythonVersion.
+#
+# Because of --no-deps, every transitive runtime dependency is listed here.
+# Deliberately NOT included: grpcio, protobuf, googleapis-common-protos and the
+# opentelemetry-* packages that solnlib>=8 declares. They are only used by
+# solnlib.observability, which neither this add-on nor splunktaucclib imports,
+# and grpcio/protobuf ship compiled binaries.
+
+# Splunk frameworks
+splunktaucclib>=8.1.0,<9
+solnlib>=8.1.1,<9
+splunk-sdk>=3.0.1,<4
+
+# HTTP client
+requests>=2.32.4,<3
+urllib3>=1.26.20,<2        # splunktaucclib requires urllib3<2
+idna>=3.7,<4
+certifi>=2024.7.4
+charset-normalizer>=3.4,<4 # pure-Python wheel; md.py/cd.py fallbacks
+PySocks>=1.7.1,<2          # socks5 proxy support
+
+# Transitive deps of solnlib / splunktaucclib
+defusedxml>=0.7.1,<1
+sortedcontainers>=2.4,<3
