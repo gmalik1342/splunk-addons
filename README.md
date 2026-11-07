@@ -13,6 +13,15 @@ project with its own tests and `build.sh`.
 | Prisma Cloud Discovery | [`TA-prisma-cloud-discovery`](TA-prisma-cloud-discovery) | 1.1.0 | Prisma Cloud Compute cloud discovery entities and scan results | `prisma:cloud_discovery` |
 | Claude Activity Feed Add-on | [`TA-claude-activity-feed`](TA-claude-activity-feed) | 1.0.0 | Anthropic Compliance API Activity Feed (Claude audit events) | `anthropic:claude:activity` |
 
+## Documentation
+
+Full documentation is in [`docs/`](docs/README.md) (also published on the
+[wiki](https://github.com/gmalik1342/splunk-addons/wiki)): a page per add-on
+(setup, data, searches, troubleshooting, release notes), plus guides for
+[installing](docs/Installing-an-Add-on.md), [troubleshooting](docs/Troubleshooting.md),
+[building](docs/Building-and-CI.md), [releasing](docs/Releasing-a-New-Version.md)
+and [publishing on Splunkbase](docs/Publishing-on-Splunkbase.md).
+
 ## Building
 
 Requires Linux x86_64 and Python 3.12+ (or Docker). From an add-on folder:
