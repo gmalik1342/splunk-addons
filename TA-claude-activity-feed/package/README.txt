@@ -1,5 +1,5 @@
-Claude Activity Feed Add-on
-===========================
+Activity Feed Add-on for Anthropic Claude
+=========================================
 
 A lightweight add-on that collects the Anthropic Compliance API Activity Feed
 (GET https://api.anthropic.com/v1/compliance/activities) into Splunk: audit
@@ -76,6 +76,8 @@ Troubleshooting
 
 Release notes
 -------------
+1.0.1  Renamed to "Activity Feed Add-on for Anthropic Claude" to follow the
+       Splunkbase naming conventions. No functional changes.
 1.0.0  Initial release.
 
 This is a community add-on. It is not built, endorsed or supported by

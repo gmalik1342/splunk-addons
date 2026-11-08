@@ -1,9 +1,9 @@
-# VeeOne Add-on
+# Specialist Stats Add-on for VeeOne
 
 | | |
 |---|---|
 | App ID | `TA-veeone` |
-| Version | 1.1.0 |
+| Version | 1.1.1 |
 | Input | `veeone_logs` |
 | Sourcetype | `veeone:logs` |
 | Splunk | Enterprise 9.0+ and Cloud (Python 3.9 or 3.13) |
@@ -48,5 +48,6 @@ With the daily default, the next snapshot may be up to 24 hours away; lower the 
 
 ## Release notes
 
+- **1.1.1** – Renamed to "Specialist Stats Add-on for VeeOne" to follow the Splunkbase naming conventions. No functional changes.
 - **1.1.0** – Rebuilt on UCC. Working collection with `X-API-Key` auth; API key stored encrypted and validated on save; configurable API base URL; snapshot per run with a daily default; retries with backoff; proxy support; Python 3.9 and 3.13; Splunk Cloud compatible.
 - **1.0.0** – Initial release (Add-on Builder).

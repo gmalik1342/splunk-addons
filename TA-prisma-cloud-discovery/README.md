@@ -1,9 +1,9 @@
-# Prisma Cloud Discovery (TA-prisma-cloud-discovery)
+# Cloud Discovery Add-on for Palo Alto Networks Prisma Cloud (TA-prisma-cloud-discovery)
 
 | | |
 |---|---|
 | App ID | `TA-prisma-cloud-discovery` |
-| Version | 1.1.0 |
+| Version | 1.1.1 |
 | Author | Gaurav Malik |
 | License | Apache-2.0 |
 | Framework | Splunk UCC (`ucc-gen`), splunktaucclib, solnlib, splunk-sdk 2.1.x |

@@ -46,5 +46,19 @@ Splunkbase gallery images: 1600×900 PNG works well. Use illustrative graphics (
 
 ## Naming
 
-- "X Add-on for Splunk" is the accepted pattern; don't start a name with "Splunk" or use a full product name like "Splunk Enterprise".
+Follow Splunk's [naming conventions](https://dev.splunk.com/enterprise/docs/releaseapps/splunkbase/namingguidelines/):
+
+- **Pattern:** `[Brand] [solution] (App | Add-on | Connector) for (third-party technology)`, e.g. "Specialist Stats Add-on for VeeOne". Splunk recommends starting with your company, brand or author name; these add-ons currently don't (the author name shows on every listing anyway).
+- **Never put "Splunk" in the title**: not at the start, and not "…for Splunk" or "…for Splunk Enterprise". Say which Splunk products are supported in the description ("…for use with Splunk® Enterprise…").
+- **The Splunkbase listing name must exactly match the `label` in `app.conf`** (also `meta.displayName` in `globalConfig.json` and `info.title` in `app.manifest`). Change all three together, release a new version, then rename the listing under *Basic information*.
+- Retired listings get "DEPRECATED" or "ARCHIVED" at the start of the display name.
 - Don't change the App ID of an existing listing; a new App ID means a new listing, and existing installs won't upgrade.
+
+| App ID | Title |
+|---|---|
+| `TA-palo-alto-cortex-audit-logs` | Audit Logs Add-on for Palo Alto Networks Cortex |
+| `TA-veeone` | Specialist Stats Add-on for VeeOne |
+| `TA-netapp_cloud_insights_secure` | Workload Security Alerts Add-on for NetApp Cloud Insights |
+| `TA-prisma-defender` | Defender Inventory Add-on for Palo Alto Networks Prisma Cloud |
+| `TA-prisma-cloud-discovery` | Cloud Discovery Add-on for Palo Alto Networks Prisma Cloud |
+| `TA-claude-activity-feed` | Activity Feed Add-on for Anthropic Claude |

@@ -644,8 +644,8 @@
     "meta": {
         "name": "TA-palo-alto-cortex-audit-logs",
         "restRoot": "TA_palo_alto_cortex_audit_logs",
-        "version": "1.0.0",
-        "displayName": "Palo Alto Cortex Audit Logs Add-on",
+        "version": "1.0.1",
+        "displayName": "Audit Logs Add-on for Palo Alto Networks Cortex",
         "schemaVersion": "0.0.10",
         "supportedPythonVersion": [
             "3.13"

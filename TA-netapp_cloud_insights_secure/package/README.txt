@@ -1,5 +1,5 @@
-NetApp_Cloud_Insights_Secure
-============================
+Workload Security Alerts Add-on for NetApp Cloud Insights
+=========================================================
 
 Collects Workload Security (formerly Cloud Secure) alerts from NetApp Data
 Infrastructure Insights (Cloud Insights) via its REST API
@@ -61,6 +61,8 @@ alerts.
 
 Release notes
 -------------
+1.1.1  Renamed to "Workload Security Alerts Add-on for NetApp Cloud Insights"
+       to follow the Splunkbase naming conventions. No functional changes.
 1.1.0  Rebuilt on the Splunk UCC framework. Each alert is ingested once and
        again only when it changes (1.0.x re-ingested up to a week of alerts
        whenever a new one arrived); paging through all alerts; account-based

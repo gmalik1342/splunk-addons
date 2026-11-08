@@ -1,11 +1,11 @@
-# Palo Alto Cortex Audit Logs Add-on
+# Audit Logs Add-on for Palo Alto Networks Cortex (TA-palo-alto-cortex-audit-logs)
 
 | | |
 |---|---|
 | App ID | `TA-palo-alto-cortex-audit-logs` |
-| Title | Palo Alto Cortex Audit Logs Add-on |
+| Title | Audit Logs Add-on for Palo Alto Networks Cortex |
 | Author | Gaurav Malik |
-| Version | 1.0.0 |
+| Version | 1.0.1 |
 | License | Apache-2.0 |
 | Framework | Splunk UCC (`ucc-gen`), splunktaucclib, solnlib, splunk-sdk |
 

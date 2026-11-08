@@ -1,5 +1,5 @@
-VeeOne Add-on
-=============
+Specialist Stats Add-on for VeeOne
+==================================
 
 Collects specialist stats from the VeeOne open API
 (GET /api/v2/specialist/stats) into Splunk.
@@ -51,6 +51,8 @@ account with your API key, and create a new input.
 
 Release notes
 -------------
+1.1.1  Renamed to "Specialist Stats Add-on for VeeOne" to follow the
+       Splunkbase naming conventions. No functional changes.
 1.1.0  Rebuilt on the Splunk UCC framework. Working collection from
        /api/v2/specialist/stats with X-API-Key auth; API key stored
        encrypted and validated on save; configurable API base URL;

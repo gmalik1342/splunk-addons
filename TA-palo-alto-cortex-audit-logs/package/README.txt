@@ -1,5 +1,5 @@
-Palo Alto Cortex Audit Logs Add-on
-==================================
+Audit Logs Add-on for Palo Alto Networks Cortex
+===============================================
 Author:  Gaurav Malik
 Version: 1.0.0
 License: Apache License 2.0 (see LICENSES/LICENSE.txt)
@@ -76,6 +76,8 @@ Community supported. Use the contact link on the Splunkbase listing.
 
 Release notes
 -------------
+1.0.1  Renamed to "Audit Logs Add-on for Palo Alto Networks Cortex" to follow
+       the Splunkbase naming conventions. No functional changes.
 1.0.0  Initial release: management logs and agent reports inputs, standard and
        advanced API keys, proxy support, KV Store checkpointing, credential
        validation, CIM Authentication mapping.

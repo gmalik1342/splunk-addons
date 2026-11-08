@@ -479,8 +479,8 @@
     "meta": {
         "name": "TA-prisma-defender",
         "restRoot": "TA_prisma_defender",
-        "version": "1.1.0",
-        "displayName": "Prisma Defender",
+        "version": "1.1.1",
+        "displayName": "Defender Inventory Add-on for Palo Alto Networks Prisma Cloud",
         "schemaVersion": "0.0.10",
         "supportedPythonVersion": [
             "3.9",

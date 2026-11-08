@@ -1,9 +1,9 @@
-# NetApp Cloud Insights Secure
+# Workload Security Alerts Add-on for NetApp Cloud Insights
 
 | | |
 |---|---|
 | App ID | `TA-netapp_cloud_insights_secure` |
-| Version | 1.1.0 |
+| Version | 1.1.1 |
 | Input | `cloud_secure_alerts` |
 | Sourcetype | `netapp:cloud_secure:alerts` |
 | Splunk | Enterprise 9.0+ and Cloud (Python 3.9 or 3.13) |
@@ -58,5 +58,6 @@ Logs: `index=_internal source=*ta_netapp_cloud_insights_secure*`
 
 ## Release notes
 
+- **1.1.1** – Renamed to "Workload Security Alerts Add-on for NetApp Cloud Insights" to follow the Splunkbase naming conventions. No functional changes.
 - **1.1.0** – Rebuilt on UCC. Each alert ingested once, and again only when it changes; paging through all alerts; account-based setup with encrypted, validated token; CIM Alerts mapping; retries with backoff; proxy support; Python 3.9 and 3.13; Splunk Cloud compatible.
 - **1.0.8** – Add-on Builder release.

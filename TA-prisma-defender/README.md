@@ -1,9 +1,9 @@
-# Prisma Defender (TA-prisma-defender)
+# Defender Inventory Add-on for Palo Alto Networks Prisma Cloud (TA-prisma-defender)
 
 | | |
 |---|---|
 | App ID | `TA-prisma-defender` |
-| Version | 1.1.0 |
+| Version | 1.1.1 |
 | Author | Gaurav Malik |
 | License | Apache-2.0 |
 | Framework | Splunk UCC (`ucc-gen`), splunktaucclib, solnlib, splunk-sdk 2.1.x |

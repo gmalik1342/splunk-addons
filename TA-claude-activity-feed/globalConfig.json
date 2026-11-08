@@ -431,8 +431,8 @@
     "meta": {
         "name": "TA-claude-activity-feed",
         "restRoot": "TA_claude_activity_feed",
-        "version": "1.0.0",
-        "displayName": "Claude Activity Feed Add-on",
+        "version": "1.0.1",
+        "displayName": "Activity Feed Add-on for Anthropic Claude",
         "schemaVersion": "0.0.10",
         "supportedPythonVersion": [
             "3.9",

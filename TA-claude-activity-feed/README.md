@@ -1,9 +1,9 @@
-# Claude Activity Feed Add-on (TA-claude-activity-feed)
+# Activity Feed Add-on for Anthropic Claude (TA-claude-activity-feed)
 
 | | |
 |---|---|
 | App ID | `TA-claude-activity-feed` |
-| Version | 1.0.0 |
+| Version | 1.0.1 |
 | Author | Gaurav Malik |
 | License | Apache-2.0 |
 | Framework | Splunk UCC (`ucc-gen`), splunktaucclib, solnlib, splunk-sdk 2.1.x |

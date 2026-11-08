@@ -1,5 +1,5 @@
-Prisma Defender
-===============
+Defender Inventory Add-on for Palo Alto Networks Prisma Cloud
+=============================================================
 
 Collects from the Prisma Cloud Compute (Twistlock) Console API:
 
@@ -68,6 +68,9 @@ delete the old input and create a new one. Changes visible in the data:
 
 Release notes
 -------------
+1.1.1  Renamed to "Defender Inventory Add-on for Palo Alto Networks Prisma
+       Cloud" to follow the Splunkbase naming conventions. No functional
+       changes.
 1.1.0  Rebuilt on the Splunk UCC framework. TLS verification always on;
        credentials (access key ID + secret key) stored encrypted and
        validated on save; account-based setup; fixed proxy handling; all

@@ -1,11 +1,11 @@
 {
     "schemaVersion": "2.0.0",
     "info": {
-        "title": "Palo Alto Cortex Audit Logs Add-on",
+        "title": "Audit Logs Add-on for Palo Alto Networks Cortex",
         "id": {
             "group": null,
             "name": "TA-palo-alto-cortex-audit-logs",
-            "version": "1.0.0"
+            "version": "1.0.1"
         },
         "author": [
             {
