@@ -1,9 +1,9 @@
-# Palo Alto Cortex Audit Logs Add-on
+# Audit Logs Add-on for Palo Alto Networks Cortex
 
 | | |
 |---|---|
 | App ID | `TA-palo-alto-cortex-audit-logs` |
-| Version | 1.0.0 |
+| Version | 1.0.1 |
 | Inputs | `cortex_audit_management_logs`, `cortex_audit_agent_reports` |
 | Sourcetypes | `cortex:audit:management_logs`, `cortex:audit:agent_reports` |
 | Splunk | Enterprise 10.2+ and Cloud 10.2+ (Python 3.13) |
@@ -70,4 +70,5 @@ See also [Troubleshooting](Troubleshooting.md).
 
 ## Release notes
 
+- **1.0.1** – Renamed to "Audit Logs Add-on for Palo Alto Networks Cortex" to follow the Splunkbase naming conventions. No functional changes.
 - **1.0.0** – Initial release: management logs and agent reports inputs, Standard and Advanced API keys, proxy support, KV Store checkpointing, credential validation, CIM Authentication mapping.

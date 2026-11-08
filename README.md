@@ -6,12 +6,12 @@ project with its own tests and `build.sh`.
 
 | Add-on | Folder | Version | Collects | Sourcetype |
 |---|---|---|---|---|
-| Palo Alto Cortex Audit Logs Add-on | [`TA-palo-alto-cortex-audit-logs`](TA-palo-alto-cortex-audit-logs) | 1.0.0 | Cortex audit management logs and agent audit reports | `cortex:audit:management_logs`, `cortex:audit:agent_reports` |
-| VeeOne Add-on | [`TA-veeone`](TA-veeone) | 1.1.0 | VeeOne specialist stats (daily snapshot) | `veeone:logs` |
-| NetApp_Cloud_Insights_Secure | [`TA-netapp_cloud_insights_secure`](TA-netapp_cloud_insights_secure) | 1.1.0 | NetApp Cloud Insights Workload Security (Cloud Secure) alerts | `netapp:cloud_secure:alerts` |
-| Prisma Defender | [`TA-prisma-defender`](TA-prisma-defender) | 1.1.0 | Prisma Cloud Compute Defender inventory, summary, registry scan progress | `prisma:defender` |
-| Prisma Cloud Discovery | [`TA-prisma-cloud-discovery`](TA-prisma-cloud-discovery) | 1.1.0 | Prisma Cloud Compute cloud discovery entities and scan results | `prisma:cloud_discovery` |
-| Claude Activity Feed Add-on | [`TA-claude-activity-feed`](TA-claude-activity-feed) | 1.0.0 | Anthropic Compliance API Activity Feed (Claude audit events) | `anthropic:claude:activity` |
+| Audit Logs Add-on for Palo Alto Networks Cortex | [`TA-palo-alto-cortex-audit-logs`](TA-palo-alto-cortex-audit-logs) | 1.0.1 | Cortex audit management logs and agent audit reports | `cortex:audit:management_logs`, `cortex:audit:agent_reports` |
+| Specialist Stats Add-on for VeeOne | [`TA-veeone`](TA-veeone) | 1.1.1 | VeeOne specialist stats (daily snapshot) | `veeone:logs` |
+| Workload Security Alerts Add-on for NetApp Cloud Insights | [`TA-netapp_cloud_insights_secure`](TA-netapp_cloud_insights_secure) | 1.1.1 | NetApp Cloud Insights Workload Security (Cloud Secure) alerts | `netapp:cloud_secure:alerts` |
+| Defender Inventory Add-on for Palo Alto Networks Prisma Cloud | [`TA-prisma-defender`](TA-prisma-defender) | 1.1.1 | Prisma Cloud Compute Defender inventory, summary, registry scan progress | `prisma:defender` |
+| Cloud Discovery Add-on for Palo Alto Networks Prisma Cloud | [`TA-prisma-cloud-discovery`](TA-prisma-cloud-discovery) | 1.1.1 | Prisma Cloud Compute cloud discovery entities and scan results | `prisma:cloud_discovery` |
+| Activity Feed Add-on for Anthropic Claude | [`TA-claude-activity-feed`](TA-claude-activity-feed) | 1.0.1 | Anthropic Compliance API Activity Feed (Claude audit events) | `anthropic:claude:activity` |
 
 ## Documentation
 

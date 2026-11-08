@@ -1,11 +1,11 @@
 {
     "schemaVersion": "2.0.0",
     "info": {
-        "title": "Claude Activity Feed Add-on",
+        "title": "Activity Feed Add-on for Anthropic Claude",
         "id": {
             "group": null,
             "name": "TA-claude-activity-feed",
-            "version": "1.0.0"
+            "version": "1.0.1"
         },
         "author": [
             {

@@ -1,11 +1,11 @@
-# VeeOne Add-on (TA-veeone)
+# Specialist Stats Add-on for VeeOne (TA-veeone)
 
 | | |
 |---|---|
 | App ID | `TA-veeone` |
-| Title | VeeOne Add-on |
+| Title | Specialist Stats Add-on for VeeOne |
 | Author | Gaurav Malik |
-| Version | 1.1.0 |
+| Version | 1.1.1 |
 | License | Apache-2.0 |
 | Framework | Splunk UCC (`ucc-gen`), splunktaucclib, solnlib, splunk-sdk 2.1.x |
 

@@ -390,8 +390,8 @@
     "meta": {
         "name": "TA-veeone",
         "restRoot": "TA_veeone",
-        "version": "1.1.0",
-        "displayName": "VeeOne Add-on",
+        "version": "1.1.1",
+        "displayName": "Specialist Stats Add-on for VeeOne",
         "schemaVersion": "0.0.10",
         "supportedPythonVersion": [
             "3.9",

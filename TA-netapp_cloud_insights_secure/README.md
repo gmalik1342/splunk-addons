@@ -1,9 +1,9 @@
-# NetApp_Cloud_Insights_Secure (TA-netapp_cloud_insights_secure)
+# Workload Security Alerts Add-on for NetApp Cloud Insights (TA-netapp_cloud_insights_secure)
 
 | | |
 |---|---|
 | App ID | `TA-netapp_cloud_insights_secure` |
-| Version | 1.1.0 |
+| Version | 1.1.1 |
 | Author | Gaurav Malik |
 | License | Apache-2.0 |
 | Framework | Splunk UCC (`ucc-gen`), splunktaucclib, solnlib, splunk-sdk 2.1.x |

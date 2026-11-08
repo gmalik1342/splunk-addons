@@ -1,5 +1,5 @@
-Prisma Cloud Discovery
-======================
+Cloud Discovery Add-on for Palo Alto Networks Prisma Cloud
+==========================================================
 
 Collects cloud discovery results from the Prisma Cloud Compute (Twistlock)
 Console API, so you can see which cloud resources exist across your
@@ -65,6 +65,8 @@ record_type field; the field names from the API are unchanged.
 
 Release notes
 -------------
+1.1.1  Renamed to "Cloud Discovery Add-on for Palo Alto Networks Prisma Cloud"
+       to follow the Splunkbase naming conventions. No functional changes.
 1.1.0  Rebuilt on the Splunk UCC framework. TLS verification always on;
        credentials (access key ID + secret key) stored encrypted and
        validated on save; account-based setup (Console URL and API version

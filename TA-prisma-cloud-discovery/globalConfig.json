@@ -462,8 +462,8 @@
     "meta": {
         "name": "TA-prisma-cloud-discovery",
         "restRoot": "TA_prisma_cloud_discovery",
-        "version": "1.1.0",
-        "displayName": "Prisma Cloud Discovery",
+        "version": "1.1.1",
+        "displayName": "Cloud Discovery Add-on for Palo Alto Networks Prisma Cloud",
         "schemaVersion": "0.0.10",
         "supportedPythonVersion": [
             "3.9",

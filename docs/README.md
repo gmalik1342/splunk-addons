@@ -6,12 +6,12 @@ Documentation for Gaurav Malik's Splunk technology add-ons (TAs). Source code, b
 
 | Add-on | Version | What it collects | Sourcetype(s) | Splunk |
 |---|---|---|---|---|
-| [Palo Alto Cortex Audit Logs](Cortex-Audit-Logs.md) | 1.0.0 | Cortex audit management logs and agent audit reports | `cortex:audit:management_logs`, `cortex:audit:agent_reports` | 10.2+ |
-| [VeeOne](VeeOne.md) | 1.1.0 | VeeOne specialist stats (daily snapshot) | `veeone:logs` | 9.0+ |
-| [NetApp Cloud Insights Secure](NetApp-Cloud-Insights-Secure.md) | 1.1.0 | Workload Security (Cloud Secure) alerts | `netapp:cloud_secure:alerts` | 9.0+ |
-| [Prisma Defender](Prisma-Defender.md) | 1.1.0 | Prisma Cloud Compute Defender inventory, summary, registry scan progress | `prisma:defender` | 9.0+ |
-| [Prisma Cloud Discovery](Prisma-Cloud-Discovery.md) | 1.1.0 | Prisma Cloud Compute cloud discovery entities and scan results | `prisma:cloud_discovery` | 9.0+ |
-| [Claude Activity Feed](Claude-Activity-Feed.md) | 1.0.0 | Anthropic Compliance API Activity Feed (Claude audit events) | `anthropic:claude:activity` | 9.0+ |
+| [Audit Logs Add-on for Palo Alto Networks Cortex](Cortex-Audit-Logs.md) | 1.0.1 | Cortex audit management logs and agent audit reports | `cortex:audit:management_logs`, `cortex:audit:agent_reports` | 10.2+ |
+| [Specialist Stats Add-on for VeeOne](VeeOne.md) | 1.1.1 | VeeOne specialist stats (daily snapshot) | `veeone:logs` | 9.0+ |
+| [Workload Security Alerts Add-on for NetApp Cloud Insights](NetApp-Cloud-Insights-Secure.md) | 1.1.1 | Workload Security (Cloud Secure) alerts | `netapp:cloud_secure:alerts` | 9.0+ |
+| [Defender Inventory Add-on for Palo Alto Networks Prisma Cloud](Prisma-Defender.md) | 1.1.1 | Prisma Cloud Compute Defender inventory, summary, registry scan progress | `prisma:defender` | 9.0+ |
+| [Cloud Discovery Add-on for Palo Alto Networks Prisma Cloud](Prisma-Cloud-Discovery.md) | 1.1.1 | Prisma Cloud Compute cloud discovery entities and scan results | `prisma:cloud_discovery` | 9.0+ |
+| [Activity Feed Add-on for Anthropic Claude](Claude-Activity-Feed.md) | 1.0.1 | Anthropic Compliance API Activity Feed (Claude audit events) | `anthropic:claude:activity` | 9.0+ |
 
 All add-ons support Splunk Cloud Platform.
 

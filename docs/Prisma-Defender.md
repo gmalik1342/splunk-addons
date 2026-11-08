@@ -1,9 +1,9 @@
-# Prisma Defender
+# Defender Inventory Add-on for Palo Alto Networks Prisma Cloud
 
 | | |
 |---|---|
 | App ID | `TA-prisma-defender` |
-| Version | 1.1.0 |
+| Version | 1.1.1 |
 | Input | `prisma_defender` |
 | Sourcetype | `prisma:defender` |
 | Splunk | Enterprise 9.0+ and Cloud (Python 3.9 or 3.13) |
@@ -63,5 +63,6 @@ Logs: `index=_internal source=*ta_prisma_defender*`
 
 ## Release notes
 
+- **1.1.1** – Renamed to "Defender Inventory Add-on for Palo Alto Networks Prisma Cloud" to follow the Splunkbase naming conventions. No functional changes.
 - **1.1.0** – Rebuilt on UCC. TLS verification always on; encrypted, validated credentials; fixed proxy handling; all Defenders (connected and disconnected, all pages); all registry scans; `record_type`; per-collection toggles; hourly default; retries; Python 3.9 and 3.13; Splunk Cloud compatible.
 - **1.0.0** – Initial release (Add-on Builder).

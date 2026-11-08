@@ -1,11 +1,11 @@
 {
     "schemaVersion": "2.0.0",
     "info": {
-        "title": "Prisma Defender",
+        "title": "Defender Inventory Add-on for Palo Alto Networks Prisma Cloud",
         "id": {
             "group": null,
             "name": "TA-prisma-defender",
-            "version": "1.1.0"
+            "version": "1.1.1"
         },
         "author": [
             {

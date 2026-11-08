@@ -1,9 +1,9 @@
-# Claude Activity Feed Add-on
+# Activity Feed Add-on for Anthropic Claude
 
 | | |
 |---|---|
 | App ID | `TA-claude-activity-feed` |
-| Version | 1.0.0 |
+| Version | 1.0.1 |
 | Input | `claude_activity_feed` |
 | Sourcetype | `anthropic:claude:activity` |
 | Splunk | Enterprise 9.0+ and Cloud (Python 3.9 or 3.13) |
@@ -76,6 +76,7 @@ Logs: `index=_internal source=*ta_claude_activity_feed*`. Each run logs events w
 
 ## Release notes
 
+- **1.0.1** – Renamed to "Activity Feed Add-on for Anthropic Claude" to follow the Splunkbase naming conventions. No functional changes.
 - **1.0.0** – Initial release.
 
 ---
