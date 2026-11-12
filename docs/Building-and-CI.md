@@ -46,7 +46,7 @@ Every transitive dependency is listed explicitly in `package/lib/requirements.tx
 
 ## GitHub Actions
 
-[`.github/workflows/build.yml`](../.github/workflows/build.yml) runs on every push to `main`, on pull requests and on demand (*Actions > Build and AppInspect > Run workflow*). It builds all six add-ons in parallel and **fails if AppInspect reports any failure or error**.
+[`.github/workflows/build.yml`](../.github/workflows/build.yml) runs on every push to `main`, on pull requests and on demand (*Actions > Build and AppInspect > Run workflow*). It builds all add-ons in parallel and **fails if AppInspect reports any failure or error**.
 
 The upload packages and AppInspect reports are attached to each run: open the run under **Actions** and download them from **Artifacts**.
 

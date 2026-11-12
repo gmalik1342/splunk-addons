@@ -12,8 +12,11 @@ Documentation for Gaurav Malik's Splunk technology add-ons (TAs). Source code, b
 | [Defender Inventory Add-on for Palo Alto Networks Prisma Cloud](Prisma-Defender.md) | 1.1.1 | Prisma Cloud Compute Defender inventory, summary, registry scan progress | `prisma:defender` | 9.0+ |
 | [Cloud Discovery Add-on for Palo Alto Networks Prisma Cloud](Prisma-Cloud-Discovery.md) | 1.1.1 | Prisma Cloud Compute cloud discovery entities and scan results | `prisma:cloud_discovery` | 9.0+ |
 | [Activity Feed Add-on for Anthropic Claude](Claude-Activity-Feed.md) | 1.0.1 | Anthropic Compliance API Activity Feed (Claude audit events) | `anthropic:claude:activity` | 9.0+ |
+| [Audit Logs Add-on for Pinecone](Pinecone-Audit-Logs.md) | 1.0.0 | Pinecone audit logs from S3 (parsing + CIM; collected by the Splunk Add-on for AWS) | `pinecone:audit` | 9.0+ |
 
 All add-ons support Splunk Cloud Platform.
+
+The Pinecone add-on is knowledge-only: Pinecone delivers audit logs to an S3 bucket, so collection is done by the Splunk Add-on for AWS and the add-on provides parsing, CIM mapping and a dashboard.
 
 ## Guides
 
@@ -25,7 +28,7 @@ All add-ons support Splunk Cloud Platform.
 
 ## Common design
 
-Every add-on is built on the [Splunk UCC framework](https://splunk.github.io/addonfactory-ucc-generator/) and follows the same rules:
+Every add-on with a collector is built on the [Splunk UCC framework](https://splunk.github.io/addonfactory-ucc-generator/) and follows the same rules:
 
 - **Accounts, not per-input secrets.** Credentials are entered once under *Configuration > Accounts*, stored encrypted in Splunk's credential store, and tested against the API when you save.
 - **TLS is always verified.** HTTP and SOCKS5 proxies are supported under *Configuration > Proxy*.
