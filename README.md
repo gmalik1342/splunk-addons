@@ -12,6 +12,7 @@ project with its own tests and `build.sh`.
 | Defender Inventory Add-on for Palo Alto Networks Prisma Cloud | [`TA-prisma-defender`](TA-prisma-defender) | 1.1.1 | Prisma Cloud Compute Defender inventory, summary, registry scan progress | `prisma:defender` |
 | Cloud Discovery Add-on for Palo Alto Networks Prisma Cloud | [`TA-prisma-cloud-discovery`](TA-prisma-cloud-discovery) | 1.1.1 | Prisma Cloud Compute cloud discovery entities and scan results | `prisma:cloud_discovery` |
 | Activity Feed Add-on for Anthropic Claude | [`TA-claude-activity-feed`](TA-claude-activity-feed) | 1.0.1 | Anthropic Compliance API Activity Feed (Claude audit events) | `anthropic:claude:activity` |
+| Audit Logs Add-on for Pinecone | [`TA-pinecone-audit-logs`](TA-pinecone-audit-logs) | 1.0.0 | Pinecone audit logs from S3 (parsing + CIM; collected by the Splunk Add-on for AWS) | `pinecone:audit` |
 
 ## Documentation
 
