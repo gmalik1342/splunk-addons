@@ -1,0 +1,128 @@
+<form version="1.1" theme="light">
+  <label>Pinecone Audit Overview</label>
+  <description>Pinecone organization, project, index, API key and login activity. Edit the pinecone_audit macro if your data is in an index that is not searched by default.</description>
+  <fieldset submitButton="false">
+    <input type="time" token="tr">
+      <label>Time range</label>
+      <default>
+        <earliest>-7d@h</earliest>
+        <latest>now</latest>
+      </default>
+    </input>
+    <input type="dropdown" token="principal_type">
+      <label>Actor type</label>
+      <choice value="*">All</choice>
+      <choice value="user">User</choice>
+      <choice value="api_key">API key</choice>
+      <choice value="service_account">Service account</choice>
+      <default>*</default>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <title>Events</title>
+      <single>
+        <search>
+          <query>`pinecone_audit` "actor.principal_type"="$principal_type$" | stats count</query>
+          <earliest>$tr.earliest$</earliest>
+          <latest>$tr.latest$</latest>
+        </search>
+      </single>
+    </panel>
+    <panel>
+      <title>Failed actions</title>
+      <single>
+        <search>
+          <query>`pinecone_audit` "actor.principal_type"="$principal_type$" "event.outcome.result"="failure" | stats count</query>
+          <earliest>$tr.earliest$</earliest>
+          <latest>$tr.latest$</latest>
+        </search>
+        <option name="rangeColors">["0x53a051","0xdc4e41"]</option>
+        <option name="rangeValues">[0]</option>
+        <option name="useColors">1</option>
+      </single>
+    </panel>
+    <panel>
+      <title>API keys created / deleted</title>
+      <single>
+        <search>
+          <query>`pinecone_audit` "actor.principal_type"="$principal_type$" "event.resource_type"="api-key" ("event.action"="create" OR "event.action"="delete") | stats count</query>
+          <earliest>$tr.earliest$</earliest>
+          <latest>$tr.latest$</latest>
+        </search>
+      </single>
+    </panel>
+    <panel>
+      <title>Indexes deleted</title>
+      <single>
+        <search>
+          <query>`pinecone_audit` "actor.principal_type"="$principal_type$" "event.resource_type"="index" "event.action"="delete" | stats count</query>
+          <earliest>$tr.earliest$</earliest>
+          <latest>$tr.latest$</latest>
+        </search>
+        <option name="rangeColors">["0x53a051","0xf8be34"]</option>
+        <option name="rangeValues">[0]</option>
+        <option name="useColors">1</option>
+      </single>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Activity over time by action</title>
+      <chart>
+        <search>
+          <query>`pinecone_audit` "actor.principal_type"="$principal_type$" | timechart count BY event.action</query>
+          <earliest>$tr.earliest$</earliest>
+          <latest>$tr.latest$</latest>
+        </search>
+        <option name="charting.chart">column</option>
+        <option name="charting.chart.stackMode">stacked</option>
+      </chart>
+    </panel>
+    <panel>
+      <title>Activity by resource type</title>
+      <chart>
+        <search>
+          <query>`pinecone_audit` "actor.principal_type"="$principal_type$" | stats count BY event.resource_type</query>
+          <earliest>$tr.earliest$</earliest>
+          <latest>$tr.latest$</latest>
+        </search>
+        <option name="charting.chart">bar</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Most active principals</title>
+      <table>
+        <search>
+          <query>`pinecone_audit` "actor.principal_type"="$principal_type$" | stats count AS events dc(event.resource_name) AS resources latest(_time) AS last_seen BY actor.principal_name actor.principal_type | sort - events | head 20 | convert ctime(last_seen)</query>
+          <earliest>$tr.earliest$</earliest>
+          <latest>$tr.latest$</latest>
+        </search>
+      </table>
+    </panel>
+    <panel>
+      <title>Failed actions</title>
+      <table>
+        <search>
+          <query>`pinecone_audit` "actor.principal_type"="$principal_type$" "event.outcome.result"="failure" | table _time actor.principal_name event.action event.resource_type event.resource_name event.outcome.reason event.outcome.error_code | sort - _time</query>
+          <earliest>$tr.earliest$</earliest>
+          <latest>$tr.latest$</latest>
+        </search>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Recent member, API key and index changes</title>
+      <table>
+        <search>
+          <query>`pinecone_audit` "actor.principal_type"="$principal_type$" ("event.resource_type"="user" OR "event.resource_type"="api-key" OR "event.resource_type"="index" OR "event.resource_type"="project" OR "event.resource_type"="organization") ("event.action"="create" OR "event.action"="update" OR "event.action"="delete") | table _time actor.principal_name actor.principal_type event.action event.resource_type event.resource_name event.outcome.result organization_name | sort - _time | head 100</query>
+          <earliest>$tr.earliest$</earliest>
+          <latest>$tr.latest$</latest>
+        </search>
+      </table>
+    </panel>
+  </row>
+</form>

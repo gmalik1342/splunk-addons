@@ -1,0 +1,4 @@
+<nav search_view="search" color="#1B365D">
+  <view name="pinecone_audit_overview" default="true" />
+  <view name="search" />
+</nav>

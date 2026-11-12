@@ -1,0 +1,65 @@
+{
+    "schemaVersion": "2.0.0",
+    "info": {
+        "title": "Audit Logs Add-on for Pinecone",
+        "id": {
+            "group": null,
+            "name": "TA-pinecone-audit-logs",
+            "version": "1.0.0"
+        },
+        "author": [
+            {
+                "name": "Gaurav Malik",
+                "email": null,
+                "company": null
+            }
+        ],
+        "releaseDate": null,
+        "description": "Parses Pinecone audit logs (organization, project, index, API key and login events) delivered to Amazon S3, with CIM Authentication and Change mappings and an overview dashboard.",
+        "classification": {
+            "intendedAudience": "IT Professionals",
+            "categories": [
+                "Security, Fraud & Compliance"
+            ],
+            "developmentStatus": "Production/Stable"
+        },
+        "commonInformationModels": {
+            "Authentication": ">=4.0.0",
+            "Change": ">=4.0.0"
+        },
+        "license": {
+            "name": "Apache License 2.0",
+            "text": "LICENSES/LICENSE.txt",
+            "uri": "https://www.apache.org/licenses/LICENSE-2.0"
+        },
+        "privacyPolicy": {
+            "name": null,
+            "text": null,
+            "uri": null
+        },
+        "releaseNotes": {
+            "name": "Release Notes",
+            "text": "README.txt",
+            "uri": null
+        }
+    },
+    "dependencies": {},
+    "tasks": [],
+    "inputGroups": {},
+    "incompatibleApps": {},
+    "platformRequirements": {
+        "splunk": {
+            "Enterprise": "*"
+        }
+    },
+    "supportedDeployments": [
+        "_standalone",
+        "_distributed",
+        "_search_head_clustering"
+    ],
+    "targetWorkloads": [
+        "_search_heads",
+        "_indexers",
+        "_forwarders"
+    ]
+}

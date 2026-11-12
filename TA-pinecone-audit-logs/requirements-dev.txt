@@ -1,0 +1,2 @@
+splunk-appinspect
+pytest>=8

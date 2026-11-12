@@ -12,6 +12,7 @@ Every add-on writes its own log file to `_internal`:
 | Prisma Defender | `index=_internal source=*ta_prisma_defender*` |
 | Prisma Cloud Discovery | `index=_internal source=*ta_prisma_cloud_discovery*` |
 | Claude Activity Feed | `index=_internal source=*ta_claude_activity_feed*` |
+| Pinecone Audit Logs | No log of its own (no collector); check the AWS add-on: `index=_internal source=*splunk_ta_aws* (ERROR OR WARN)` |
 
 For more detail, set **Configuration > Logging > Log level** to `DEBUG`, wait for the next run, then set it back. Each run logs a summary line (events written, pages, checkpoint position or failures).
 

@@ -23,6 +23,7 @@
 | End-user license | Apache License Version 2.0 |
 | Export control: *"This package contains encrypted code"* | **Unchecked.** The add-ons use the platform's TLS and Splunk's credential store, and bundle no cryptography libraries. Re-check this if a crypto library is ever bundled |
 | Platform version compatibility | 9.0–10.7 (all), **except Cortex Audit Logs: 10.2+ only** (Python 3.13) |
+| Pinecone listing | Mention that it requires the Splunk Add-on for AWS (Generic S3 input) |
 | Release notes | From the add-on's wiki page |
 
 ## Per-add-on listing answers
@@ -35,6 +36,7 @@
 | Prisma Defender | Security, Fraud & Compliance; Endpoint | none |
 | Prisma Cloud Discovery | Security, Fraud & Compliance; Endpoint | none |
 | Claude Activity Feed | Artificial Intelligence; Security, Fraud & Compliance | none |
+| Pinecone Audit Logs | Artificial Intelligence; Security, Fraud & Compliance | 4.x, 5.x, 6.x, 8.x (Authentication, Change) |
 
 ## Listing text
 
@@ -62,3 +64,4 @@ Follow Splunk's [naming conventions](https://dev.splunk.com/enterprise/docs/rele
 | `TA-prisma-defender` | Defender Inventory Add-on for Palo Alto Networks Prisma Cloud |
 | `TA-prisma-cloud-discovery` | Cloud Discovery Add-on for Palo Alto Networks Prisma Cloud |
 | `TA-claude-activity-feed` | Activity Feed Add-on for Anthropic Claude |
+| `TA-pinecone-audit-logs` | Audit Logs Add-on for Pinecone |

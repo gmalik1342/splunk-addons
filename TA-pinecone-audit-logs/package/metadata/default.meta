@@ -1,0 +1,11 @@
+[]
+access = read : [ * ], write : [ admin, sc_admin ]
+export = system
+
+[views]
+access = read : [ * ], write : [ admin, sc_admin ]
+export = none
+
+[macros]
+access = read : [ * ], write : [ admin, sc_admin ]
+export = system
