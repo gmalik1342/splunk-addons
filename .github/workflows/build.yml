@@ -20,6 +20,7 @@ jobs:
           - TA-prisma-cloud-discovery
           - TA-claude-activity-feed
           - TA-pinecone-audit-logs
+          - TA-cursor-audit-logs
     defaults:
       run:
         working-directory: ${{ matrix.addon }}
