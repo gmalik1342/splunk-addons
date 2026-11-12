@@ -1,0 +1,540 @@
+{
+    "pages": {
+        "configuration": {
+            "title": "Configuration",
+            "description": "Configure Anthropic API keys, proxy and logging for the add-on.",
+            "tabs": [
+                {
+                    "name": "account",
+                    "title": "Accounts",
+                    "restHandlerModule": "langsmith_account_handler",
+                    "restHandlerClass": "LangSmithAccountHandler",
+                    "table": {
+                        "actions": [
+                            "edit",
+                            "delete",
+                            "clone"
+                        ],
+                        "header": [
+                            {
+                                "label": "Name",
+                                "field": "name"
+                            },
+                            {
+                                "label": "Region",
+                                "field": "region"
+                            },
+                            {
+                                "label": "Organization ID",
+                                "field": "organization_id"
+                            }
+                        ]
+                    },
+                    "entity": [
+                        {
+                            "type": "text",
+                            "label": "Account Name",
+                            "field": "name",
+                            "help": "A unique name for this LangSmith organization.",
+                            "required": true,
+                            "validators": [
+                                {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 50,
+                                    "errorMsg": "Length of Account Name should be between 1 and 50."
+                                },
+                                {
+                                    "type": "regex",
+                                    "pattern": "^[a-zA-Z]\\w*$",
+                                    "errorMsg": "Name must begin with a letter and contain only letters, numbers and underscores."
+                                }
+                            ]
+                        },
+                        {
+                            "type": "singleSelect",
+                            "label": "Region",
+                            "field": "region",
+                            "required": true,
+                            "defaultValue": "us",
+                            "help": "Where your LangSmith organization is hosted. Choose Self-hosted to enter your own URL.",
+                            "options": {
+                                "disableSearch": true,
+                                "autoCompleteFields": [
+                                    {
+                                        "value": "us",
+                                        "label": "US (api.smith.langchain.com)"
+                                    },
+                                    {
+                                        "value": "eu",
+                                        "label": "EU (eu.api.smith.langchain.com)"
+                                    },
+                                    {
+                                        "value": "apac",
+                                        "label": "APAC (apac.api.smith.langchain.com)"
+                                    },
+                                    {
+                                        "value": "aws_us",
+                                        "label": "AWS US (aws.api.smith.langchain.com)"
+                                    },
+                                    {
+                                        "value": "custom",
+                                        "label": "Self-hosted"
+                                    }
+                                ]
+                            },
+                            "validators": [
+                                {
+                                    "type": "regex",
+                                    "pattern": "^(us|eu|apac|aws_us|custom)$",
+                                    "errorMsg": "Select a valid region."
+                                }
+                            ]
+                        },
+                        {
+                            "type": "text",
+                            "label": "Self-hosted URL",
+                            "field": "custom_url",
+                            "required": false,
+                            "help": "Self-hosted only: the HTTPS URL of your LangSmith instance, host only (e.g. https://langsmith.example.com). Audit logs need Helm chart 0.12.33+ and must be enabled for the organization.",
+                            "validators": [
+                                {
+                                    "type": "regex",
+                                    "pattern": "^$|^https://[A-Za-z0-9.-]+(:\\d{1,5})?/?$",
+                                    "errorMsg": "Enter an HTTPS URL with the host only, e.g. https://langsmith.example.com"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "text",
+                            "label": "Organization ID",
+                            "field": "organization_id",
+                            "required": true,
+                            "help": "Your LangSmith organization ID (a UUID), sent as X-Organization-Id.",
+                            "validators": [
+                                {
+                                    "type": "regex",
+                                    "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$",
+                                    "errorMsg": "Organization ID must be a UUID."
+                                }
+                            ]
+                        },
+                        {
+                            "type": "text",
+                            "label": "API Key",
+                            "field": "api_key",
+                            "required": true,
+                            "encrypted": true,
+                            "help": "A LangSmith API key belonging to an Organization Admin or Organization Operator (Enterprise plan). Stored encrypted and tested when you save.",
+                            "validators": [
+                                {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 8192,
+                                    "errorMsg": "Length of API Key should be between 1 and 8192."
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "proxy",
+                    "title": "Proxy",
+                    "entity": [
+                        {
+                            "type": "checkbox",
+                            "label": "Enable",
+                            "field": "proxy_enabled"
+                        },
+                        {
+                            "type": "singleSelect",
+                            "label": "Proxy Type",
+                            "field": "proxy_type",
+                            "defaultValue": "http",
+                            "options": {
+                                "disableSearch": true,
+                                "autoCompleteFields": [
+                                    {
+                                        "value": "http",
+                                        "label": "http"
+                                    },
+                                    {
+                                        "value": "socks5",
+                                        "label": "socks5"
+                                    }
+                                ]
+                            },
+                            "validators": [
+                                {
+                                    "type": "regex",
+                                    "pattern": "^(http|socks5)$",
+                                    "errorMsg": "Proxy Type must be http or socks5."
+                                }
+                            ]
+                        },
+                        {
+                            "type": "text",
+                            "label": "Host",
+                            "field": "proxy_url",
+                            "validators": [
+                                {
+                                    "type": "string",
+                                    "minLength": 0,
+                                    "maxLength": 4096,
+                                    "errorMsg": "Max host length is 4096"
+                                },
+                                {
+                                    "type": "regex",
+                                    "pattern": "^[A-Za-z0-9.:\\-\\[\\]]*$",
+                                    "errorMsg": "Enter a host name or IP address only, without scheme."
+                                }
+                            ]
+                        },
+                        {
+                            "type": "text",
+                            "label": "Port",
+                            "field": "proxy_port",
+                            "validators": [
+                                {
+                                    "type": "number",
+                                    "range": [
+                                        1,
+                                        65535
+                                    ],
+                                    "isInteger": true
+                                }
+                            ]
+                        },
+                        {
+                            "type": "text",
+                            "label": "Username",
+                            "field": "proxy_username",
+                            "validators": [
+                                {
+                                    "type": "string",
+                                    "minLength": 0,
+                                    "maxLength": 50,
+                                    "errorMsg": "Max length of username is 50"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "text",
+                            "label": "Password",
+                            "field": "proxy_password",
+                            "encrypted": true,
+                            "validators": [
+                                {
+                                    "type": "string",
+                                    "minLength": 0,
+                                    "maxLength": 8192,
+                                    "errorMsg": "Max length of password is 8192"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "checkbox",
+                            "label": "Reverse DNS resolution (socks5)",
+                            "field": "proxy_rdns"
+                        }
+                    ],
+                    "options": {
+                        "saveValidator": "function(formData) { if(!formData.proxy_enabled || formData.proxy_enabled === '0') {return true; } if(!formData.proxy_url) { return 'Proxy Host can not be empty'; } if(!formData.proxy_port) { return 'Proxy Port can not be empty'; } return true; }"
+                    }
+                },
+                {
+                    "name": "logging",
+                    "title": "Logging",
+                    "entity": [
+                        {
+                            "type": "singleSelect",
+                            "label": "Log level",
+                            "field": "loglevel",
+                            "defaultValue": "INFO",
+                            "options": {
+                                "disableSearch": true,
+                                "autoCompleteFields": [
+                                    {
+                                        "value": "DEBUG",
+                                        "label": "DEBUG"
+                                    },
+                                    {
+                                        "value": "INFO",
+                                        "label": "INFO"
+                                    },
+                                    {
+                                        "value": "WARNING",
+                                        "label": "WARNING"
+                                    },
+                                    {
+                                        "value": "ERROR",
+                                        "label": "ERROR"
+                                    },
+                                    {
+                                        "value": "CRITICAL",
+                                        "label": "CRITICAL"
+                                    }
+                                ]
+                            },
+                            "validators": [
+                                {
+                                    "type": "regex",
+                                    "pattern": "^(DEBUG|INFO|WARNING|ERROR|CRITICAL)$",
+                                    "errorMsg": "Select a valid log level."
+                                }
+                            ],
+                            "required": true
+                        }
+                    ]
+                }
+            ]
+        },
+        "inputs": {
+            "title": "Inputs",
+            "description": "Collect LangSmith audit logs.",
+            "table": {
+                "actions": [
+                    "edit",
+                    "delete",
+                    "clone"
+                ],
+                "header": [
+                    {
+                        "label": "Name",
+                        "field": "name"
+                    },
+                    {
+                        "label": "Account",
+                        "field": "account"
+                    },
+                    {
+                        "label": "Interval (s)",
+                        "field": "interval"
+                    },
+                    {
+                        "label": "Index",
+                        "field": "index"
+                    },
+                    {
+                        "label": "Status",
+                        "field": "disabled"
+                    }
+                ],
+                "moreInfo": [
+                    {
+                        "label": "Name",
+                        "field": "name"
+                    },
+                    {
+                        "label": "Account",
+                        "field": "account"
+                    },
+                    {
+                        "label": "Interval (s)",
+                        "field": "interval"
+                    },
+                    {
+                        "label": "Index",
+                        "field": "index"
+                    },
+                    {
+                        "label": "Start Time (UTC)",
+                        "field": "start_time"
+                    },
+                    {
+                        "label": "Ingestion Delay (s)",
+                        "field": "delay"
+                    },
+                    {
+                        "label": "Operations",
+                        "field": "operations"
+                    },
+                    {
+                        "label": "Workspace ID",
+                        "field": "workspace_id"
+                    },
+                    {
+                        "label": "Status",
+                        "field": "disabled",
+                        "mapping": {
+                            "true": "Disabled",
+                            "false": "Enabled"
+                        }
+                    }
+                ]
+            },
+            "services": [
+                {
+                    "name": "langsmith_audit_logs",
+                    "title": "LangSmith Audit Logs",
+                    "entity": [
+                        {
+                            "type": "text",
+                            "label": "Name",
+                            "field": "name",
+                            "help": "A unique name for this input.",
+                            "required": true,
+                            "validators": [
+                                {
+                                    "type": "regex",
+                                    "pattern": "^[a-zA-Z]\\w*$",
+                                    "errorMsg": "Name must begin with a letter and contain only letters, numbers and underscores."
+                                },
+                                {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 100,
+                                    "errorMsg": "Length of input name should be between 1 and 100"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "singleSelect",
+                            "label": "Account",
+                            "field": "account",
+                            "help": "LangSmith account configured on the Configuration page.",
+                            "required": true,
+                            "options": {
+                                "referenceName": "account"
+                            },
+                            "validators": [
+                                {
+                                    "type": "regex",
+                                    "pattern": "^[a-zA-Z]\\w*$",
+                                    "errorMsg": "Select a valid account."
+                                },
+                                {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 50,
+                                    "errorMsg": "Length of Account should be between 1 and 50."
+                                }
+                            ]
+                        },
+                        {
+                            "type": "text",
+                            "label": "Interval",
+                            "field": "interval",
+                            "required": true,
+                            "defaultValue": "300",
+                            "help": "How often to poll, in seconds (60 to 86400).",
+                            "validators": [
+                                {
+                                    "type": "number",
+                                    "range": [
+                                        60,
+                                        86400
+                                    ],
+                                    "isInteger": true,
+                                    "errorMsg": "Interval must be an integer between 60 and 86400 seconds."
+                                }
+                            ]
+                        },
+                        {
+                            "type": "singleSelect",
+                            "label": "Index",
+                            "field": "index",
+                            "required": true,
+                            "defaultValue": "default",
+                            "options": {
+                                "endpointUrl": "data/indexes",
+                                "denyList": "^_.*$",
+                                "createSearchChoice": true
+                            },
+                            "validators": [
+                                {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 80,
+                                    "errorMsg": "Length of index name should be between 1 and 80."
+                                }
+                            ]
+                        },
+                        {
+                            "type": "text",
+                            "label": "Start Time (UTC)",
+                            "field": "start_time",
+                            "required": false,
+                            "help": "Only used on the first run. Format YYYY-MM-DDThh:mm:ssZ. Leave empty to start 24 hours back.",
+                            "validators": [
+                                {
+                                    "type": "regex",
+                                    "pattern": "^$|^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z$",
+                                    "errorMsg": "Use the format YYYY-MM-DDThh:mm:ssZ, for example 2026-11-01T00:00:00Z."
+                                }
+                            ]
+                        },
+                        {
+                            "type": "text",
+                            "label": "Ingestion Delay",
+                            "field": "delay",
+                            "required": false,
+                            "defaultValue": "300",
+                            "help": "Seconds to stay behind real time (60 to 3600), so events recorded late are not missed. The last 10 minutes are also re-read each run and de-duplicated.",
+                            "validators": [
+                                {
+                                    "type": "number",
+                                    "range": [
+                                        60,
+                                        3600
+                                    ],
+                                    "isInteger": true,
+                                    "errorMsg": "Ingestion Delay must be an integer between 60 and 3600."
+                                }
+                            ]
+                        },
+                        {
+                            "type": "text",
+                            "label": "Operations",
+                            "field": "operations",
+                            "required": false,
+                            "help": "Optional. Comma-separated LangSmith operations to collect (e.g. login, create_api_key, update_role). Leave empty to collect everything.",
+                            "validators": [
+                                {
+                                    "type": "regex",
+                                    "pattern": "^[a-z0-9_]*(\\s*,\\s*[a-z0-9_]+)*$",
+                                    "errorMsg": "Use comma-separated operation names (lowercase letters, digits, underscores)."
+                                },
+                                {
+                                    "type": "string",
+                                    "minLength": 0,
+                                    "maxLength": 4096,
+                                    "errorMsg": "Operations is too long."
+                                }
+                            ]
+                        },
+                        {
+                            "type": "text",
+                            "label": "Workspace ID",
+                            "field": "workspace_id",
+                            "required": false,
+                            "help": "Optional. Collect a single workspace's events (UUID). Leave empty for the whole organization.",
+                            "validators": [
+                                {
+                                    "type": "regex",
+                                    "pattern": "^$|^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$",
+                                    "errorMsg": "Workspace ID must be a UUID."
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    },
+    "meta": {
+        "name": "TA-langsmith-audit-logs",
+        "restRoot": "TA_langsmith_audit_logs",
+        "version": "1.0.0",
+        "displayName": "Audit Logs Add-on for LangSmith",
+        "schemaVersion": "0.0.10",
+        "supportedPythonVersion": [
+            "3.9",
+            "3.13"
+        ],
+        "supportedThemes": [
+            "light",
+            "dark"
+        ]
+    }
+}

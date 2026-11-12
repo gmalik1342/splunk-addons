@@ -21,6 +21,7 @@ jobs:
           - TA-claude-activity-feed
           - TA-pinecone-audit-logs
           - TA-cursor-audit-logs
+          - TA-langsmith-audit-logs
     defaults:
       run:
         working-directory: ${{ matrix.addon }}
