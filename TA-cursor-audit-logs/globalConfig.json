@@ -1,0 +1,496 @@
+{
+    "pages": {
+        "configuration": {
+            "title": "Configuration",
+            "description": "Configure Anthropic API keys, proxy and logging for the add-on.",
+            "tabs": [
+                {
+                    "name": "account",
+                    "title": "Accounts",
+                    "restHandlerModule": "cursor_account_handler",
+                    "restHandlerClass": "CursorAccountHandler",
+                    "table": {
+                        "actions": [
+                            "edit",
+                            "delete",
+                            "clone"
+                        ],
+                        "header": [
+                            {
+                                "label": "Name",
+                                "field": "name"
+                            },
+                            {
+                                "label": "Key Type",
+                                "field": "key_type"
+                            },
+                            {
+                                "label": "Team ID",
+                                "field": "team_id"
+                            }
+                        ]
+                    },
+                    "entity": [
+                        {
+                            "type": "text",
+                            "label": "Account Name",
+                            "field": "name",
+                            "help": "A unique name for this Cursor team or organization.",
+                            "required": true,
+                            "validators": [
+                                {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 50,
+                                    "errorMsg": "Length of Account Name should be between 1 and 50."
+                                },
+                                {
+                                    "type": "regex",
+                                    "pattern": "^[a-zA-Z]\\w*$",
+                                    "errorMsg": "Name must begin with a letter and contain only letters, numbers and underscores."
+                                }
+                            ]
+                        },
+                        {
+                            "type": "singleSelect",
+                            "label": "Key Type",
+                            "field": "key_type",
+                            "required": true,
+                            "defaultValue": "team",
+                            "help": "Team API key: one team's audit logs (GET /teams/audit-logs). Organization API key with the auditlogs:read scope: all linked teams plus organization events (GET /organizations/audit-logs).",
+                            "options": {
+                                "disableSearch": true,
+                                "autoCompleteFields": [
+                                    {
+                                        "value": "team",
+                                        "label": "Team API key"
+                                    },
+                                    {
+                                        "value": "organization",
+                                        "label": "Organization API key"
+                                    }
+                                ]
+                            },
+                            "validators": [
+                                {
+                                    "type": "regex",
+                                    "pattern": "^(team|organization)$",
+                                    "errorMsg": "Key Type must be team or organization."
+                                }
+                            ]
+                        },
+                        {
+                            "type": "text",
+                            "label": "API Key",
+                            "field": "api_key",
+                            "required": true,
+                            "encrypted": true,
+                            "help": "A Cursor Admin API key (Enterprise plan). Stored encrypted and tested when you save.",
+                            "validators": [
+                                {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 8192,
+                                    "errorMsg": "Length of API Key should be between 1 and 8192."
+                                }
+                            ]
+                        },
+                        {
+                            "type": "text",
+                            "label": "Team ID",
+                            "field": "team_id",
+                            "required": false,
+                            "help": "Optional, Organization keys only: collect a single team's events. Leave empty for all teams.",
+                            "validators": [
+                                {
+                                    "type": "regex",
+                                    "pattern": "^\\d{0,20}$",
+                                    "errorMsg": "Team ID must be numeric."
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "proxy",
+                    "title": "Proxy",
+                    "entity": [
+                        {
+                            "type": "checkbox",
+                            "label": "Enable",
+                            "field": "proxy_enabled"
+                        },
+                        {
+                            "type": "singleSelect",
+                            "label": "Proxy Type",
+                            "field": "proxy_type",
+                            "defaultValue": "http",
+                            "options": {
+                                "disableSearch": true,
+                                "autoCompleteFields": [
+                                    {
+                                        "value": "http",
+                                        "label": "http"
+                                    },
+                                    {
+                                        "value": "socks5",
+                                        "label": "socks5"
+                                    }
+                                ]
+                            },
+                            "validators": [
+                                {
+                                    "type": "regex",
+                                    "pattern": "^(http|socks5)$",
+                                    "errorMsg": "Proxy Type must be http or socks5."
+                                }
+                            ]
+                        },
+                        {
+                            "type": "text",
+                            "label": "Host",
+                            "field": "proxy_url",
+                            "validators": [
+                                {
+                                    "type": "string",
+                                    "minLength": 0,
+                                    "maxLength": 4096,
+                                    "errorMsg": "Max host length is 4096"
+                                },
+                                {
+                                    "type": "regex",
+                                    "pattern": "^[A-Za-z0-9.:\\-\\[\\]]*$",
+                                    "errorMsg": "Enter a host name or IP address only, without scheme."
+                                }
+                            ]
+                        },
+                        {
+                            "type": "text",
+                            "label": "Port",
+                            "field": "proxy_port",
+                            "validators": [
+                                {
+                                    "type": "number",
+                                    "range": [
+                                        1,
+                                        65535
+                                    ],
+                                    "isInteger": true
+                                }
+                            ]
+                        },
+                        {
+                            "type": "text",
+                            "label": "Username",
+                            "field": "proxy_username",
+                            "validators": [
+                                {
+                                    "type": "string",
+                                    "minLength": 0,
+                                    "maxLength": 50,
+                                    "errorMsg": "Max length of username is 50"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "text",
+                            "label": "Password",
+                            "field": "proxy_password",
+                            "encrypted": true,
+                            "validators": [
+                                {
+                                    "type": "string",
+                                    "minLength": 0,
+                                    "maxLength": 8192,
+                                    "errorMsg": "Max length of password is 8192"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "checkbox",
+                            "label": "Reverse DNS resolution (socks5)",
+                            "field": "proxy_rdns"
+                        }
+                    ],
+                    "options": {
+                        "saveValidator": "function(formData) { if(!formData.proxy_enabled || formData.proxy_enabled === '0') {return true; } if(!formData.proxy_url) { return 'Proxy Host can not be empty'; } if(!formData.proxy_port) { return 'Proxy Port can not be empty'; } return true; }"
+                    }
+                },
+                {
+                    "name": "logging",
+                    "title": "Logging",
+                    "entity": [
+                        {
+                            "type": "singleSelect",
+                            "label": "Log level",
+                            "field": "loglevel",
+                            "defaultValue": "INFO",
+                            "options": {
+                                "disableSearch": true,
+                                "autoCompleteFields": [
+                                    {
+                                        "value": "DEBUG",
+                                        "label": "DEBUG"
+                                    },
+                                    {
+                                        "value": "INFO",
+                                        "label": "INFO"
+                                    },
+                                    {
+                                        "value": "WARNING",
+                                        "label": "WARNING"
+                                    },
+                                    {
+                                        "value": "ERROR",
+                                        "label": "ERROR"
+                                    },
+                                    {
+                                        "value": "CRITICAL",
+                                        "label": "CRITICAL"
+                                    }
+                                ]
+                            },
+                            "validators": [
+                                {
+                                    "type": "regex",
+                                    "pattern": "^(DEBUG|INFO|WARNING|ERROR|CRITICAL)$",
+                                    "errorMsg": "Select a valid log level."
+                                }
+                            ],
+                            "required": true
+                        }
+                    ]
+                }
+            ]
+        },
+        "inputs": {
+            "title": "Inputs",
+            "description": "Collect Cursor audit logs from the Admin API.",
+            "table": {
+                "actions": [
+                    "edit",
+                    "delete",
+                    "clone"
+                ],
+                "header": [
+                    {
+                        "label": "Name",
+                        "field": "name"
+                    },
+                    {
+                        "label": "Account",
+                        "field": "account"
+                    },
+                    {
+                        "label": "Interval (s)",
+                        "field": "interval"
+                    },
+                    {
+                        "label": "Index",
+                        "field": "index"
+                    },
+                    {
+                        "label": "Status",
+                        "field": "disabled"
+                    }
+                ],
+                "moreInfo": [
+                    {
+                        "label": "Name",
+                        "field": "name"
+                    },
+                    {
+                        "label": "Account",
+                        "field": "account"
+                    },
+                    {
+                        "label": "Interval (s)",
+                        "field": "interval"
+                    },
+                    {
+                        "label": "Index",
+                        "field": "index"
+                    },
+                    {
+                        "label": "Start Time (UTC)",
+                        "field": "start_time"
+                    },
+                    {
+                        "label": "Ingestion Delay (s)",
+                        "field": "delay"
+                    },
+                    {
+                        "label": "Event Types",
+                        "field": "event_types"
+                    },
+                    {
+                        "label": "Status",
+                        "field": "disabled",
+                        "mapping": {
+                            "true": "Disabled",
+                            "false": "Enabled"
+                        }
+                    }
+                ]
+            },
+            "services": [
+                {
+                    "name": "cursor_audit_logs",
+                    "title": "Cursor Audit Logs",
+                    "entity": [
+                        {
+                            "type": "text",
+                            "label": "Name",
+                            "field": "name",
+                            "help": "A unique name for this input.",
+                            "required": true,
+                            "validators": [
+                                {
+                                    "type": "regex",
+                                    "pattern": "^[a-zA-Z]\\w*$",
+                                    "errorMsg": "Name must begin with a letter and contain only letters, numbers and underscores."
+                                },
+                                {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 100,
+                                    "errorMsg": "Length of input name should be between 1 and 100"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "singleSelect",
+                            "label": "Account",
+                            "field": "account",
+                            "help": "Cursor account configured on the Configuration page.",
+                            "required": true,
+                            "options": {
+                                "referenceName": "account"
+                            },
+                            "validators": [
+                                {
+                                    "type": "regex",
+                                    "pattern": "^[a-zA-Z]\\w*$",
+                                    "errorMsg": "Select a valid account."
+                                },
+                                {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 50,
+                                    "errorMsg": "Length of Account should be between 1 and 50."
+                                }
+                            ]
+                        },
+                        {
+                            "type": "text",
+                            "label": "Interval",
+                            "field": "interval",
+                            "required": true,
+                            "defaultValue": "300",
+                            "help": "How often to poll, in seconds (60 to 86400).",
+                            "validators": [
+                                {
+                                    "type": "number",
+                                    "range": [
+                                        60,
+                                        86400
+                                    ],
+                                    "isInteger": true,
+                                    "errorMsg": "Interval must be an integer between 60 and 86400 seconds."
+                                }
+                            ]
+                        },
+                        {
+                            "type": "singleSelect",
+                            "label": "Index",
+                            "field": "index",
+                            "required": true,
+                            "defaultValue": "default",
+                            "options": {
+                                "endpointUrl": "data/indexes",
+                                "denyList": "^_.*$",
+                                "createSearchChoice": true
+                            },
+                            "validators": [
+                                {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 80,
+                                    "errorMsg": "Length of index name should be between 1 and 80."
+                                }
+                            ]
+                        },
+                        {
+                            "type": "text",
+                            "label": "Start Time (UTC)",
+                            "field": "start_time",
+                            "required": false,
+                            "help": "Only used on the first run. Format YYYY-MM-DDThh:mm:ssZ. Leave empty to start 24 hours back.",
+                            "validators": [
+                                {
+                                    "type": "regex",
+                                    "pattern": "^$|^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z$",
+                                    "errorMsg": "Use the format YYYY-MM-DDThh:mm:ssZ, for example 2026-11-01T00:00:00Z."
+                                }
+                            ]
+                        },
+                        {
+                            "type": "text",
+                            "label": "Ingestion Delay",
+                            "field": "delay",
+                            "required": false,
+                            "defaultValue": "300",
+                            "help": "Seconds to stay behind real time (60 to 3600), so events recorded late are not missed. The last 10 minutes are also re-read each run and de-duplicated on event_id.",
+                            "validators": [
+                                {
+                                    "type": "number",
+                                    "range": [
+                                        60,
+                                        3600
+                                    ],
+                                    "isInteger": true,
+                                    "errorMsg": "Ingestion Delay must be an integer between 60 and 3600."
+                                }
+                            ]
+                        },
+                        {
+                            "type": "text",
+                            "label": "Event Types",
+                            "field": "event_types",
+                            "required": false,
+                            "help": "Optional. Comma-separated Cursor event types to collect (e.g. login, add_user, team_settings). Leave empty to collect everything.",
+                            "validators": [
+                                {
+                                    "type": "regex",
+                                    "pattern": "^[a-z0-9_.:-]*(\\s*,\\s*[a-z0-9_.:-]+)*$",
+                                    "errorMsg": "Use comma-separated event types (lowercase letters, digits, _ . : -)."
+                                },
+                                {
+                                    "type": "string",
+                                    "minLength": 0,
+                                    "maxLength": 4096,
+                                    "errorMsg": "Event Types is too long."
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    },
+    "meta": {
+        "name": "TA-cursor-audit-logs",
+        "restRoot": "TA_cursor_audit_logs",
+        "version": "1.0.0",
+        "displayName": "Audit Logs Add-on for Cursor",
+        "schemaVersion": "0.0.10",
+        "supportedPythonVersion": [
+            "3.9",
+            "3.13"
+        ],
+        "supportedThemes": [
+            "light",
+            "dark"
+        ]
+    }
+}
