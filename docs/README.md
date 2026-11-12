@@ -13,6 +13,7 @@ Documentation for Gaurav Malik's Splunk technology add-ons (TAs). Source code, b
 | [Cloud Discovery Add-on for Palo Alto Networks Prisma Cloud](Prisma-Cloud-Discovery.md) | 1.1.1 | Prisma Cloud Compute cloud discovery entities and scan results | `prisma:cloud_discovery` | 9.0+ |
 | [Activity Feed Add-on for Anthropic Claude](Claude-Activity-Feed.md) | 1.0.1 | Anthropic Compliance API Activity Feed (Claude audit events) | `anthropic:claude:activity` | 9.0+ |
 | [Audit Logs Add-on for Pinecone](Pinecone-Audit-Logs.md) | 1.0.0 | Pinecone audit logs from S3 (parsing + CIM; collected by the Splunk Add-on for AWS) | `pinecone:audit` | 9.0+ |
+| [Audit Logs Add-on for Cursor](Cursor-Audit-Logs.md) | 1.0.0 | Cursor audit logs from the Admin API (Enterprise) | `cursor:audit` | 9.0+ |
 
 All add-ons support Splunk Cloud Platform.
 
