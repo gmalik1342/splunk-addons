@@ -38,6 +38,7 @@
 | Claude Activity Feed | Artificial Intelligence; Security, Fraud & Compliance | none |
 | Pinecone Audit Logs | Artificial Intelligence; Security, Fraud & Compliance | 4.x, 5.x, 6.x, 8.x (Authentication, Change) |
 | Cursor Audit Logs | Artificial Intelligence; Security, Fraud & Compliance | 4.x, 5.x, 6.x, 8.x (Authentication, Change) |
+| LangSmith Audit Logs | Artificial Intelligence; Security, Fraud & Compliance | 4.x, 5.x, 6.x, 8.x (Authentication, Change) |
 
 ## Listing text
 
@@ -67,3 +68,4 @@ Follow Splunk's [naming conventions](https://dev.splunk.com/enterprise/docs/rele
 | `TA-claude-activity-feed` | Activity Feed Add-on for Anthropic Claude |
 | `TA-pinecone-audit-logs` | Audit Logs Add-on for Pinecone |
 | `TA-cursor-audit-logs` | Audit Logs Add-on for Cursor |
+| `TA-langsmith-audit-logs` | Audit Logs Add-on for LangSmith |
