@@ -22,6 +22,7 @@ jobs:
           - TA-pinecone-audit-logs
           - TA-cursor-audit-logs
           - TA-langsmith-audit-logs
+          - TA-zscaler-deception-cim
     defaults:
       run:
         working-directory: ${{ matrix.addon }}

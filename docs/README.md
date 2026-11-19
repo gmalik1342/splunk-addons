@@ -15,10 +15,11 @@ Documentation for Gaurav Malik's Splunk technology add-ons (TAs). Source code, b
 | [Audit Logs Add-on for Pinecone](Pinecone-Audit-Logs.md) | 1.0.0 | Pinecone audit logs from S3 (parsing + CIM; collected by the Splunk Add-on for AWS) | `pinecone:audit` | 9.0+ |
 | [Audit Logs Add-on for Cursor](Cursor-Audit-Logs.md) | 1.0.0 | Cursor audit logs from the Admin API (Enterprise) | `cursor:audit` | 9.0+ |
 | [Audit Logs Add-on for LangSmith](LangSmith-Audit-Logs.md) | 1.0.0 | LangSmith audit logs (OCSF API Activity, Enterprise) | `langsmith:audit` | 9.0+ |
+| [CIM Add-on for Zscaler Deception](Zscaler-Deception-CIM.md) | 1.0.0 | Zscaler Deception decoy events and audit logs sent by HEC or syslog (parsing + CIM) | `zscaler:deception:events`, `zscaler:deception:audit` | 9.0+ |
 
 All add-ons support Splunk Cloud Platform.
 
-The Pinecone add-on is knowledge-only: Pinecone delivers audit logs to an S3 bucket, so collection is done by the Splunk Add-on for AWS and the add-on provides parsing, CIM mapping and a dashboard.
+The Pinecone add-on is knowledge-only: Pinecone delivers audit logs to an S3 bucket, so collection is done by the Splunk Add-on for AWS and the add-on provides parsing, CIM mapping and a dashboard. The Zscaler Deception add-on is knowledge-only too: Zscaler Deception sends its own data to HEC or syslog.
 
 ## Guides
 
