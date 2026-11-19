@@ -1,0 +1,151 @@
+<form version="1.1" theme="light">
+  <label>Zscaler Deception Overview</label>
+  <description>Decoy activity sent by Zscaler Deception. Edit the zscaler_deception_events macro if the data is in an index that is not searched by default.</description>
+  <fieldset submitButton="false" autoRun="true">
+    <input type="time" token="time">
+      <label>Time range</label>
+      <default>
+        <earliest>-24h@h</earliest>
+        <latest>now</latest>
+      </default>
+    </input>
+    <input type="dropdown" token="whitelist">
+      <label>Whitelisted sources</label>
+      <choice value="`zscaler_deception_not_whitelisted`">Exclude</choice>
+      <choice value="">Include</choice>
+      <default>`zscaler_deception_not_whitelisted`</default>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <title>Events</title>
+      <single>
+        <search>
+          <query>`zscaler_deception_events` $whitelist$ | stats count</query>
+          <earliest>$time.earliest$</earliest>
+          <latest>$time.latest$</latest>
+        </search>
+      </single>
+    </panel>
+    <panel>
+      <title>High and critical</title>
+      <single>
+        <search>
+          <query>`zscaler_deception_events` $whitelist$ | search severity="high" OR severity="critical" | stats count</query>
+          <earliest>$time.earliest$</earliest>
+          <latest>$time.latest$</latest>
+        </search>
+        <option name="rangeColors">["0x53a051","0xdc4e41"]</option>
+        <option name="rangeValues">[0]</option>
+        <option name="useColors">1</option>
+      </single>
+    </panel>
+    <panel>
+      <title>Distinct attackers</title>
+      <single>
+        <search>
+          <query>`zscaler_deception_events` $whitelist$ | stats dc(src) AS attackers</query>
+          <earliest>$time.earliest$</earliest>
+          <latest>$time.latest$</latest>
+        </search>
+      </single>
+    </panel>
+    <panel>
+      <title>Decoys engaged</title>
+      <single>
+        <search>
+          <query>`zscaler_deception_events` $whitelist$ | stats dc(dest) AS decoys</query>
+          <earliest>$time.earliest$</earliest>
+          <latest>$time.latest$</latest>
+        </search>
+      </single>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Events over time by severity</title>
+      <chart>
+        <search>
+          <query>`zscaler_deception_events` $whitelist$ | timechart count BY severity</query>
+          <earliest>$time.earliest$</earliest>
+          <latest>$time.latest$</latest>
+        </search>
+        <option name="charting.chart">column</option>
+        <option name="charting.chart.stackMode">stacked</option>
+      </chart>
+    </panel>
+    <panel>
+      <title>Events by type</title>
+      <chart>
+        <search>
+          <query>`zscaler_deception_events` $whitelist$ | stats count BY deception_type | sort - count</query>
+          <earliest>$time.earliest$</earliest>
+          <latest>$time.latest$</latest>
+        </search>
+        <option name="charting.chart">bar</option>
+        <option name="charting.legend.placement">none</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Top attackers</title>
+      <table>
+        <search>
+          <query>`zscaler_deception_events` $whitelist$ | stats count dc(dest) AS decoys values(deception_type) AS types max(attacker_score) AS attacker_score latest(_time) AS last_seen BY src | sort - count | head 20 | eval last_seen=strftime(last_seen, "%Y-%m-%d %H:%M:%S")</query>
+          <earliest>$time.earliest$</earliest>
+          <latest>$time.latest$</latest>
+        </search>
+        <option name="count">10</option>
+      </table>
+    </panel>
+    <panel>
+      <title>Top decoys</title>
+      <table>
+        <search>
+          <query>`zscaler_deception_events` $whitelist$ | stats count dc(src) AS attackers values(dest_category) AS decoy_group values(decoy_type) AS decoy_type BY dest | sort - count | head 20</query>
+          <earliest>$time.earliest$</earliest>
+          <latest>$time.latest$</latest>
+        </search>
+        <option name="count">10</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>MITRE ATT&amp;CK techniques</title>
+      <table>
+        <search>
+          <query>`zscaler_deception_events` $whitelist$ | stats count dc(src) AS attackers BY mitre_technique_id | sort - count | head 20</query>
+          <earliest>$time.earliest$</earliest>
+          <latest>$time.latest$</latest>
+        </search>
+        <option name="count">10</option>
+      </table>
+    </panel>
+    <panel>
+      <title>Kill chain phase</title>
+      <chart>
+        <search>
+          <query>`zscaler_deception_events` $whitelist$ | stats count BY category</query>
+          <earliest>$time.earliest$</earliest>
+          <latest>$time.latest$</latest>
+        </search>
+        <option name="charting.chart">pie</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Recent events</title>
+      <table>
+        <search>
+          <query>`zscaler_deception_events` $whitelist$ | table _time severity deception_type src src_port dest dest_ip category mitre_technique_id event_id | head 200</query>
+          <earliest>$time.earliest$</earliest>
+          <latest>$time.latest$</latest>
+        </search>
+        <option name="count">20</option>
+      </table>
+    </panel>
+  </row>
+</form>

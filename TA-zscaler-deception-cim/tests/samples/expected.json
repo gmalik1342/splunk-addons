@@ -1,0 +1,127 @@
+[
+  {
+    "attacker.id": "198.51.100.2",
+    "attacker.ip": "198.51.100.3",
+    "attacker.name": "198.51.100.4",
+    "attacker.port": 64537,
+    "decoy.group": "External",
+    "decoy.id": "58",
+    "decoy.ip": "198.51.100.4",
+    "decoy.name": "abcd.com",
+    "decoy.type": "recon",
+    "kill_chain_phase": "Reconnaissance",
+    "recon.method": "GET",
+    "recon.request_uri": "/remote/login",
+    "recon.status": "200",
+    "recon.response.headers.Server": [
+      "nginx"
+    ],
+    "timestamp": "2024-12-04T22:29:58Z",
+    "type": "recon",
+    "attacker.threat_parse_ids": [
+      "recon_abuseipdb_low",
+      "recon_activity"
+    ],
+    "attacker.score": 60,
+    "mitre_ids": [
+      "T1594",
+      "T1595",
+      "T1133",
+      "T1595.002"
+    ],
+    "severity": "medium",
+    "score": 25,
+    "is_itdr": false,
+    "whitelisted": false,
+    "id": "2024-12-04T22:30:25Z-v3-00000000-2d89-4d47-a2cc-000000000000"
+  },
+  {
+    "attacker.id": "203.0.113.10",
+    "attacker.ip": "203.0.113.10",
+    "attacker.name": "203.0.113.10",
+    "attacker.port": 51522,
+    "decoy.group": "Datacenter",
+    "decoy.id": "12",
+    "decoy.ip": "10.20.30.40",
+    "decoy.name": "db-backup-01",
+    "decoy.type": "linux",
+    "kill_chain_phase": "Lateral Movement",
+    "linux.username": "root",
+    "timestamp": "2024-12-05T08:15:02Z",
+    "type": "ssh",
+    "attacker.threat_parse_ids": [
+      "ssh_login_attempt"
+    ],
+    "attacker.score": 80,
+    "mitre_ids": [
+      "T1021.004"
+    ],
+    "severity": "HIGH",
+    "score": 70,
+    "is_itdr": false,
+    "whitelisted": false,
+    "id": "2024-12-05T08:15:05Z-v3-00000000-1111-4d47-a2cc-000000000001"
+  },
+  {
+    "attacker.id": "WS-0042",
+    "attacker.ip": "10.1.2.3",
+    "attacker.name": "ws-0042.corp.example",
+    "attacker.user": "CORP\\jdoe",
+    "decoy.group": "Endpoints",
+    "decoy.id": "77",
+    "decoy.name": "lure-credentials",
+    "decoy.type": "endpoint",
+    "kill_chain_phase": "Credential Access",
+    "timestamp": "2024-12-05T09:01:44Z",
+    "type": "endpoint",
+    "attacker.threat_parse_ids": [
+      "endpoint_lure_access"
+    ],
+    "attacker.score": 95,
+    "mitre_ids": [
+      "T1003",
+      "T1552.001"
+    ],
+    "severity": "critical",
+    "score": 90,
+    "is_itdr": true,
+    "whitelisted": false,
+    "id": "2024-12-05T09:01:50Z-v3-00000000-2222-4d47-a2cc-000000000002"
+  },
+  {
+    "attacker.id": "192.0.2.50",
+    "attacker.ip": "192.0.2.50",
+    "attacker.name": "scanner.example",
+    "attacker.port": 64537,
+    "decoy.group": "External",
+    "decoy.id": "58",
+    "decoy.ip": "198.51.100.4",
+    "decoy.name": "abcd.com",
+    "decoy.type": "recon",
+    "kill_chain_phase": "Reconnaissance",
+    "recon.method": "GET",
+    "recon.request_uri": "/remote/login",
+    "recon.status": "200",
+    "recon.response.headers.Server": [
+      "nginx"
+    ],
+    "timestamp": "2024-12-05T10:00:00Z",
+    "type": "recon",
+    "attacker.threat_parse_ids": [
+      "recon_abuseipdb_low",
+      "recon_activity"
+    ],
+    "attacker.score": 60,
+    "mitre_ids": [
+      "T1594",
+      "T1595",
+      "T1133",
+      "T1595.002"
+    ],
+    "severity": "low",
+    "score": 25,
+    "is_itdr": false,
+    "whitelisted": true,
+    "id": "2024-12-05T10:00:03Z-v3-00000000-3333-4d47-a2cc-000000000003"
+  }
+]
